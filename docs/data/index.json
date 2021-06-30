@@ -1,0 +1,45 @@
+{
+    "team": [
+        {
+            "name": "Team Member Name 1",
+            "email": "email@eng.pdn.ac.lk",
+            "eNumber": "E/yy/xxx",
+            "github_profile":"#",
+            "linkedin_profile":"#",
+            "website": "#"
+        },
+        {
+            "name": "Team Member Name 2",
+            "email": "email@eng.pdn.ac.lk",
+            "eNumber": "E/yy/xxx",
+            "github_profile":"#",
+            "linkedin_profile":"#",
+            "website": "#"
+        },
+        {
+            "name": "Team Member Name 3",
+            "email": "email@eng.pdn.ac.lk",
+            "eNumber": "E/yy/xxx",
+            "github_profile":"#",
+            "linkedin_profile":"#",
+            "website": "#"
+        }
+    ],
+    "supervisors": [
+        {
+            "name": "Dr. Supervisor 1",
+            "email": "email@eng.pdn.ac.lk",
+            "linkedin_profile":"#",
+            "researchgate_profile":"#",
+            "website": "#"
+        },
+        {
+            "name": "Supervisor 2",
+            "email": "email@eng.pdn.ac.lk",
+            "linkedin_profile":"#",
+            "researchgate_profile":"#",
+            "website": "#"
+        }
+    ],
+    "tags": ["Web", "Embedded Systems"]
+}
