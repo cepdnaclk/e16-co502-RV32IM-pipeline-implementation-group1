@@ -9,8 +9,7 @@ module alu(DATA1, DATA2, RESULT, SELECT);
     
 
     // alu intermediate results
-    wire [31:0] FWD_RESULT,
-                ADD_RESULT,
+    wire [31:0] ADD_RESULT,
                 SLT_RESULT,
                 SLTU_RESULT,
                 AND_RESULT,
@@ -28,9 +27,6 @@ module alu(DATA1, DATA2, RESULT, SELECT);
                 DIVU_RESULT,
                 REM_RESULT,
                 REMU_RESULT;
-
-    // forwarding for LUI instrustction
-    assign #1 FWD_RESULT = DATA2;
 
     //  --> should add proper delays 
     assign #2 ADD_RESULT = DATA1 + DATA2;       // addition
@@ -62,7 +58,6 @@ module alu(DATA1, DATA2, RESULT, SELECT);
     begin
  
         case(SELECT)
-            5'b00011: RESULT = FWD_RESULT;
             5'b00000: RESULT = ADD_RESULT; 
             5'b00001: RESULT = SUB_RESULT; 
             5'b00100: RESULT = SLL_RESULT; 
