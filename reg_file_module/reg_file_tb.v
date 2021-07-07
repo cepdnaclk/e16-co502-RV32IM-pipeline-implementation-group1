@@ -14,6 +14,7 @@ module reg_file_tb;
     reg_file my_reg_file(WRITE_DATA, DATA1, DATA2, WRITE_ADDRESS, DATA1_ADDRESS, DATA2_ADDRESS, WRITE_ENABLE, CLK, RESET);
 
     initial begin
+        CLK = 1'b0;
         RESET = 1'b0;
         WRITE_DATA = 32'd0;
         DATA1_ADDRESS = 5'd0;
@@ -31,7 +32,6 @@ module reg_file_tb;
 
         #5
         RESET = 1'b0;
-        CLK = 1'b0;
 
         /* 
             TEST 1 starts here!
