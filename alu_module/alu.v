@@ -9,7 +9,8 @@ module alu(DATA1, DATA2, RESULT, SELECT);
     
 
     // alu intermediate results
-    wire [7:0]  ADD_RESULT,
+    wire [31:0] FWD_RESULT,
+                ADD_RESULT,
                 SLT_RESULT,
                 SLTU_RESULT,
                 AND_RESULT,
@@ -28,6 +29,8 @@ module alu(DATA1, DATA2, RESULT, SELECT);
                 REM_RESULT,
                 REMU_RESULT;
 
+    // forwarding for LUI instrustction
+    assign #1 FWD_RESULT = DATA2;
 
     //  --> should add proper delays 
     assign #2 ADD_RESULT = DATA1 + DATA2;       // addition
@@ -41,43 +44,43 @@ module alu(DATA1, DATA2, RESULT, SELECT);
     assign #1 XOR_RESULT = DATA1 ^ DATA2;       // bitwise logical XOR
     assign #1 SLL_RESULT = DATA1 << DATA2;      // Logical Left Shift
     assign #1 SRL_RESULT = DATA1 >> DATA2;      // Logical Right Shift
-    assign #2 SRA_RESULT = DATA1 >>> DATA2;     // Arithmetic Right shift
+    assign #1 SRA_RESULT = DATA1 >>> DATA2;     // Arithmetic Right shift
     
     // --> upper 32 bit
-    assign #2 MUL_RESULT = DATA1 * DATA2;       // Multiplication
-    assign #2 MULH_RESULT = DATA1 * DATA2;      // Multiplication High Signed x Signed
-    assign #2 MULHU_RESULT = $unsigned(DATA1) * $unsigned(DATA2);     // Multiplication High Unsigned x Unsigned
-    assign #2 MULHSU_RESULT = $signed(DATA1) * $unsigned(DATA2);     // Multiplication High Signed x UnSigned
+    assign #3 MUL_RESULT = DATA1 * DATA2;       // Multiplication
+    assign #3 MULH_RESULT = DATA1 * DATA2;      // Multiplication High Signed x Signed
+    assign #3 MULHU_RESULT = $unsigned(DATA1) * $unsigned(DATA2);     // Multiplication High Unsigned x Unsigned
+    assign #3 MULHSU_RESULT = $signed(DATA1) * $unsigned(DATA2);     // Multiplication High Signed x UnSigned
     
     // DIV --> should round towards zero 
-    assign #2 DIV_RESULT = DATA1 / DATA2;                           // Division
-    assign #2 DIVU_RESULT = $unsigned(DATA1) / $unsigned(DATA2);    // Division Unsigned
-    assign #2 REM_RESULT = DATA1 % DATA2;       // Remainder
-    assign #2 REMU_RESULT = DATA1 % DATA2;      // Remainder Unsigned
-
+    assign #3 DIV_RESULT = DATA1 / DATA2;                           // Division
+    assign #3 DIVU_RESULT = $unsigned(DATA1) / $unsigned(DATA2);    // Division Unsigned
+    assign #3 REM_RESULT = DATA1 % DATA2;       // Remainder
+    assign #3 REMU_RESULT = DATA1 % DATA2;      // Remainder Unsigned
 
     always @(*)
     begin
  
         case(SELECT)
-            5'b00000: RESULT = ADD_RESULT ; 
-            5'b00001: RESULT = SUB_RESULT ; 
-            5'b00100: RESULT = SLL_RESULT ; 
-            5'b01000: RESULT = SLT_RESULT ; 
-            5'b01100: RESULT = SLTU_RESULT ; 
-            5'b10000: RESULT = XOR_RESULT ; 
-            5'b10100: RESULT = SRL_RESULT ; 
-            5'b10101: RESULT = SRA_RESULT ; 
-            5'b11000: RESULT = OR_RESULT ; 
-            5'b11100: RESULT = AND_RESULT ; 
-            5'b00001: RESULT = MUL_RESULT ; 
-            5'b00110: RESULT = MULH_RESULT ; 
-            5'b01010: RESULT = MULHU_RESULT ; 
-            5'b01110: RESULT = MULHSU_RESULT ; 
-            5'b10010: RESULT = DIV_RESULT ; 
-            5'b10110: RESULT = DIVU_RESULT ; 
-            5'b11010: RESULT = REM_RESULT ; 
-            5'b11110: RESULT = REMU_RESULT ; 
+            5'b00011: RESULT = FWD_RESULT;
+            5'b00000: RESULT = ADD_RESULT; 
+            5'b00001: RESULT = SUB_RESULT; 
+            5'b00100: RESULT = SLL_RESULT; 
+            5'b01000: RESULT = SLT_RESULT; 
+            5'b01100: RESULT = SLTU_RESULT; 
+            5'b10000: RESULT = XOR_RESULT; 
+            5'b10100: RESULT = SRL_RESULT; 
+            5'b10101: RESULT = SRA_RESULT; 
+            5'b11000: RESULT = OR_RESULT; 
+            5'b11100: RESULT = AND_RESULT; 
+            5'b00010: RESULT = MUL_RESULT; 
+            5'b00110: RESULT = MULH_RESULT; 
+            5'b01010: RESULT = MULHU_RESULT; 
+            5'b01110: RESULT = MULHSU_RESULT; 
+            5'b10010: RESULT = DIV_RESULT; 
+            5'b10110: RESULT = DIVU_RESULT; 
+            5'b11010: RESULT = REM_RESULT; 
+            5'b11110: RESULT = REMU_RESULT; 
                 
             default:  RESULT = 0 ;  
                                 
