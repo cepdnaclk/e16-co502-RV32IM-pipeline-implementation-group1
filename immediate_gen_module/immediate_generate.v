@@ -12,16 +12,16 @@ module immediate_generate(IN, OUT, IMM_SEL);
     output reg [31:0] OUT;      // sign extended 32-bit value
 
 
-    wire [7:0]  U_OUT,
+    wire [31:0]  U_OUT,
                 J_OUT,
                 B_OUT,
                 I_SIGN_OUT,
-                IU_OUT,
+                I_UNSIGN_OUT,
                 S_OUT,
                 I_SHIFT_OUT;
 
     // U Type Immediate
-    assign U_OUT[11:0] = {24{0}};
+    assign U_OUT[11:0] = {12{1'b0}};
     assign U_OUT[31:12] = IN[24:5];
                
     // J type Immediate
@@ -40,20 +40,20 @@ module immediate_generate(IN, OUT, IMM_SEL);
 
     //I Type Immediate
     assign I_SIGN_OUT[11:0] = IN[24:13] ;
-    assign I_SIGN_OUT[31:12] = {15{IN[24]}};
+    assign I_SIGN_OUT[31:12] = {12{IN[24]}};
 
     //IU --> unsigned extend Immediate
     assign I_UNSIGN_OUT[11:0] = IN[24:13] ;
-    assign I_UNSIGN_OUT[31:12] = {15{0}};
+    assign I_UNSIGN_OUT[31:12] = {20{1'b0}};
 
     // S Type Immediate
     assign S_OUT[4:0] = IN[4:0] ;
     assign S_OUT[11:5] = IN[24:18];
-    assign S_OUT[31:12] = {15{IN[24]}};
+    assign S_OUT[31:12] = {20{IN[24]}};
 
     // SFT 
     assign I_SHIFT_OUT[4:0] = IN[17:13];
-    assign I_SHIFT_OUT[31:5] = {27{0}};    
+    assign I_SHIFT_OUT[31:5] = {27{1'b0}};    
     
     always @(*)
     begin
