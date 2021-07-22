@@ -15,18 +15,19 @@ module alu(DATA1, DATA2, RESULT, SELECT);
                 AND_RESULT,
                 OR_RESULT,
                 XOR_RESULT,
-                SLL_RESSULT,
+                SLL_RESULT,
                 SRL_RESULT,
                 SUB_RESULT,
                 SRA_RESULT,
                 MUL_RESULT,
-                MULH_RESULT,
                 MULHU_RESULT,
                 MULHSU_RESULT,
                 DIV_RESULT,
                 DIVU_RESULT,
                 REM_RESULT,
                 REMU_RESULT;
+    
+    wire [63:0] MULH_RESULT;
 
     //  --> should add proper delays 
     assign #2 ADD_RESULT = DATA1 + DATA2;       // addition
@@ -56,7 +57,6 @@ module alu(DATA1, DATA2, RESULT, SELECT);
 
     always @(*)
     begin
- 
         case(SELECT)
             5'b00000: RESULT = ADD_RESULT; 
             5'b00010: RESULT = SUB_RESULT; 
@@ -69,7 +69,7 @@ module alu(DATA1, DATA2, RESULT, SELECT);
             5'b11000: RESULT = OR_RESULT; 
             5'b11100: RESULT = AND_RESULT; 
             5'b00001: RESULT = MUL_RESULT; 
-            5'b00101: RESULT = MULH_RESULT; 
+            5'b00101: RESULT = MULH_RESULT[63:32]; 
             5'b01001: RESULT = MULHU_RESULT; 
             5'b01101: RESULT = MULHSU_RESULT; 
             5'b10001: RESULT = DIV_RESULT; 
