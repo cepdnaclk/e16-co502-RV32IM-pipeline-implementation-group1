@@ -22,7 +22,7 @@ module immediate_generate_tb;
         IMM_SEL = 3'b000;
         #1
         $display("U = %b", OUT);
-        // `assert(OUT, 32'b10110000001110001000_000000000000);
+        `assert(OUT, 32'b10110000001110001000_000000000000);
         // output : 10110000001110001000_000000000000
 
         #5
@@ -31,7 +31,7 @@ module immediate_generate_tb;
         IMM_SEL = 3'b001;
         #1
         $display("J = %b", OUT);
-        // `assert(OUT, 32'b111111111111_01001110_1_0001101110);
+        `assert(OUT, 32'b111111111111_01001110_1_0001101110);
         // output: 111111111111_01001110_1_00011011100
 
         #5
@@ -40,7 +40,7 @@ module immediate_generate_tb;
         IMM_SEL = 3'b010;
         #1
         $display("B = %b", OUT);
-        // `assert(OUT, 32'b11111111111111111111_0_010000_0101_0);
+        `assert(OUT, 32'b11111111111111111111_0_010000_0101_0);
         // output:11111111111111111111_0_010000_0101_0
 
         #5
@@ -49,7 +49,7 @@ module immediate_generate_tb;
         IMM_SEL = 3'b011;
         #1
         $display("I = %b", OUT);
-        // `assert(OUT, 32'b11111111111111111111_101001001001);
+        `assert(OUT, 32'b11111111111111111111_101001001001);
         //output : 11111111111111111111_101001001001
 
         #5
@@ -58,7 +58,7 @@ module immediate_generate_tb;
         IMM_SEL = 3'b100;
         #1
         $display("IU = %b", OUT);
-        // `assert(OUT, 32'b00000000000000000000_101001001001);
+        `assert(OUT, 32'b00000000000000000000_101001001001);
         //output : 00000000000000000000_101001001001
 
         #5
@@ -68,7 +68,7 @@ module immediate_generate_tb;
         //output : 11111111111111111111_1010010_00101
         #1
         $display("S = %b", OUT);
-        // `assert(OUT, 32'b11111111111111111111_1010010_00101);
+        `assert(OUT, 32'b11111111111111111111_1010010_00101);
 
         #5
         // SFT type test
@@ -77,12 +77,13 @@ module immediate_generate_tb;
         #1
         $display("SFT = %b", OUT);
         // output: 0000000000000000000000000000_01001
-        // `assert(OUT, 32'b0000000000000000000000000000_01001);
+        `assert(OUT, 32'b0000000000000000000000000000_01001);
   
-        // $display("TEST 1 Passed!");
+        $display("TEST 1 Passed!");
 
-        #100
         $finish;
     end
 
 endmodule
+
+// TODO: something wrong
