@@ -36,11 +36,11 @@ module immediate_generate(IN, OUT, IMM_SEL);
     assign B_OUT[4:1] = IN[4:1];
     assign B_OUT[10:5] = IN[23:18];
     assign B_OUT[11] = IN[0];
-    assign B_OUT[31:12] = {10{IN[24]}};
+    assign B_OUT[31:12] = {20{IN[24]}};
 
     //I Type Immediate
     assign I_SIGN_OUT[11:0] = IN[24:13] ;
-    assign I_SIGN_OUT[31:12] = {12{IN[24]}};
+    assign I_SIGN_OUT[31:12] = {20{IN[24]}};
 
     //IU --> unsigned extend Immediate
     assign I_UNSIGN_OUT[11:0] = IN[24:13] ;
