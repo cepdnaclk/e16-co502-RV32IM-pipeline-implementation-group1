@@ -37,7 +37,7 @@ module reg_file(WRITE_DATA, DATA1, DATA2, WRITE_ADDRESS, DATA1_ADDRESS, DATA2_AD
     //this runs only on positive clock edges
     always @ (posedge CLK) begin
         //if the write = 1 and reset = 0, the given register will be written with the given value
-        if (WRITE_ENABLE & !RESET) begin
+        if (WRITE_ENABLE & !RESET & WRITE_ADDRESS != 0) begin
             #1 REGISTER[WRITE_ADDRESS] = WRITE_DATA;
         end
     end
