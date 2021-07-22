@@ -32,7 +32,7 @@
 // WB_SEL
 `define ALU 2'b00
 `define MEM 2'b01
-`define IMM 2'b10
+`define IMM_WB 2'b10
 `define PC_4 2'b11
 
 // ALU_OP
@@ -48,7 +48,7 @@
 `define AND 5'b11100
 `define MUL 5'b00001
 `define MULH 5'b00101
-`define MULHU 5'b01001
+`define MULHSU 5'b01001
 `define MULHU 5'b01101
 `define DIV 5'b10001
 `define DIVU 5'b10101
