@@ -13,7 +13,7 @@ module immediate_generate_tb;
 
     initial begin
         
-        $dumpfile("immediate_generate.vcd");
+        $dumpfile("immediate_generate_wavedata.vcd");
         $dumpvars(0, immediate_generate_tb);
 
         #10
@@ -21,69 +21,62 @@ module immediate_generate_tb;
         IN = 25'b10110000001110001000_10100; 
         IMM_SEL = 3'b000;
         #1
-        $display("U = %b", OUT);
         `assert(OUT, 32'b10110000001110001000_000000000000);
-        // output : 10110000001110001000_000000000000
+        $display("U Test Passed !");
 
         #5
         // J type test
         IN = 25'b1_0001101110_1_01001110_01010;
         IMM_SEL = 3'b001;
         #1
-        $display("J = %b", OUT);
-        `assert(OUT, 32'b111111111111_01001110_1_0001101110);
-        // output: 111111111111_01001110_1_00011011100
-
-        #5
-        // B type test
-        IN = 25'b1_010000_11011_10101_110_0101_0;
-        IMM_SEL = 3'b010;
-        #1
-        $display("B = %b", OUT);
-        `assert(OUT, 32'b11111111111111111111_0_010000_0101_0);
-        // output:11111111111111111111_0_010000_0101_0
-
-        #5
-        // I type test
-        IN = 25'b101001001001_10100_010_00101;
-        IMM_SEL = 3'b011;
-        #1
-        $display("I = %b", OUT);
-        `assert(OUT, 32'b11111111111111111111_101001001001);
-        //output : 11111111111111111111_101001001001
-
-        #5
-        // IU type test
-        IN = 25'b101001001001_10100_010_00101;
-        IMM_SEL = 3'b100;
-        #1
-        $display("IU = %b", OUT);
-        `assert(OUT, 32'b00000000000000000000_101001001001);
-        //output : 00000000000000000000_101001001001
+        `assert(OUT, 32'b111111111111_01001110_1_0001101110_0);
+        $display("J Test Passed !");
 
         #5
         // S type test
         IN = 25'b1010010_01001_10100_010_00101;
-        IMM_SEL = 3'b101;
-        //output : 11111111111111111111_1010010_00101
+        IMM_SEL = 3'b010;
         #1
-        $display("S = %b", OUT);
         `assert(OUT, 32'b11111111111111111111_1010010_00101);
+        $display("S Test Passed !");
+
 
         #5
-        // SFT type test
+        // B type test
+        IN = 25'b1_010000_11011_10101_110_0101_0;
+        IMM_SEL = 3'b011;
+        #1
+        `assert(OUT, 32'b11111111111111111111_0_010000_0101_0);
+        $display("B Test Passed !");
+
+        #5
+        // I_SIGNED type test
+        IN = 25'b101001001001_10100_010_00101;
+        IMM_SEL = 3'b100;
+        #1
+        `assert(OUT, 32'b11111111111111111111_101001001001);
+        $display("I_SIGNED Test Passed !");
+
+        #5
+        // I_SHIFT type test
         IN = 25'b1010010_01001_10100_010_00101;
+        IMM_SEL = 3'b101;
+        #1
+        `assert(OUT, 32'b000000000000000000000000000_01001);
+        $display("I_SHIFT Test Passed !");
+
+
+        #5
+        // I_UNSIGNED type test
+        IN = 25'b101001001001_10100_010_00101;
         IMM_SEL = 3'b110;
         #1
-        $display("SFT = %b", OUT);
-        // output: 0000000000000000000000000000_01001
-        `assert(OUT, 32'b0000000000000000000000000000_01001);
-  
-        $display("TEST 1 Passed!");
+        `assert(OUT, 32'b00000000000000000000_101001001001);
+        $display("I_UNSIGNED Test Passed !");
+
+        $display("All Tests Passed !");
 
         $finish;
     end
 
 endmodule
-
-// TODO: something wrong
