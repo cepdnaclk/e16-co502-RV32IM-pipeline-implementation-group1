@@ -17,13 +17,14 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ![Sample Image](./images/sample.png)
 
-
 ## Team
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
+
+- eNumber, Name, [email](mailto:name@email.com)
+- eNumber, Name, [email](mailto:name@email.com)
+- eNumber, Name, [email](mailto:name@email.com)
 
 ## Table of Contents
+
 1. [Introduction](#introduction)
 2. [Other Sub Topics](#other-sub-topics)
 3. [Links](#links)
@@ -32,7 +33,7 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Introduction
 
- description of the real world problem and solution, impact
+description of the real world problem and solution, impact
 
 ## Other Sub Topics
 
@@ -40,11 +41,10 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Links
 
-- [Project Repository](https://github.com/cepdnaclk/{{ page.repository-name }}){:target="_blank"}
-- [Project Page](https://cepdnaclk.github.io/{{ page.repository-name}}){:target="_blank"}
+- [Project Repository](https://github.com/cepdnaclk/{{ page.repository-name }}){:target="\_blank"}
+- [Project Page](https://cepdnaclk.github.io/{{ page.repository-name}}){:target="\_blank"}
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
-
-[//]: # (Please refer this to learn more about Markdown syntax)
-[//]: # (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+[//]: # "Please refer this to learn more about Markdown syntax"
+[//]: # "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
