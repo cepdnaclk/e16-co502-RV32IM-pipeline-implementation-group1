@@ -37,7 +37,7 @@ and store(STORE, !OPCODE[6], OPCODE[5], !OPCODE[4], !OPCODE[3], !OPCODE[2], OPCO
 and i_type(I_TYPE, !OPCODE[6], !OPCODE[5], OPCODE[4], !OPCODE[3], !OPCODE[2], OPCODE[1], OPCODE[0]);
 and r_type(R_TYPE, !OPCODE[6], OPCODE[5], OPCODE[4], !OPCODE[3], !OPCODE[2], OPCODE[1], OPCODE[0]);
 
-or op1sel(OP1SEL, AUIPC, JAL);
+or op1sel(OP1SEL, AUIPC, JAL, B_TYPE);
 or op2sel(OP2SEL, AUIPC, JAL, JALR, B_TYPE, LOAD, STORE, I_TYPE);
 assign MEM_WRITE = STORE;
 assign MEM_READ = LOAD;
@@ -49,15 +49,6 @@ or bl(BL, JAL, JALR, B_TYPE);
 or imm_type2(IMM_TYPE[2], JALR, I_TYPE);
 or imm_type1(IMM_TYPE[1], B_TYPE, STORE);
 or imm_type0(IMM_TYPE[0], JAL, B_TYPE);
-
-//////////////////////////////////////////////
-// ALUOP generation unit
-//////////////////////////////////////////////
-and aluop4(ALUOP[4], FUNCT3[2], ALUOP_TYPE);    // ALUOP[4] bit
-and aluop3(ALUOP[3], FUNCT3[1], ALUOP_TYPE);    // ALUOP[3] bit
-and aluop2(ALUOP[2], FUNCT3[0], ALUOP_TYPE);    // ALUOP[2] bit
-and aluop1(ALUOP[1], FUNCT7[5], ALUOP_TYPE);    // ALUOP[1] bit
-and aluop0(ALUOP[0], FUNCT7[0], ALUOP_TYPE);    // ALUOP[0] bit
 
 //////////////////////////////////////////////
 //  BRANCH_JUMP generation unit
@@ -92,5 +83,22 @@ or imm_sel0_or(IMM_SEL0_OR_OUTPUT, !FUNCT3[2], !FUNCT3[1]);
 and imm_sel0_and1(IMM_SEL0_AND1_OUTPUT, IMM_SEL0_OR_OUTPUT, FUNCT3[0], IMM_TYPE[2]);
 and imm_sel0_and2(IMM_SEL0_AND2_OUTPUT, !IMM_TYPE[2], IMM_TYPE[0]);
 or imm_sel0(IMM_SEL[0], IMM_SEL0_AND1_OUTPUT, IMM_SEL0_AND2_OUTPUT);
+
+//////////////////////////////////////////////
+// ALUOP generation unit
+//////////////////////////////////////////////
+wire I_SHIFT, FUNCT7_EN, FUNCT7_5, FUNCT7_0;
+
+and i_shift(I_SHIFT, IMM_SEL[2], !IMM_SEL[1], IMM_SEL[0]);
+or r_type_or_i_shift(FUNCT7_EN, I_SHIFT, R_TYPE);
+
+and funct7_5_en(FUNCT7_5, FUNCT7[5], FUNCT7_EN);
+and funct7_0_en(FUNCT7_0, FUNCT7[0], FUNCT7_EN);
+
+and aluop4(ALUOP[4], FUNCT3[2], ALUOP_TYPE);    // ALUOP[4] bit
+and aluop3(ALUOP[3], FUNCT3[1], ALUOP_TYPE);    // ALUOP[3] bit
+and aluop2(ALUOP[2], FUNCT3[0], ALUOP_TYPE);    // ALUOP[2] bit
+and aluop1(ALUOP[1], FUNCT7_5, ALUOP_TYPE);    // ALUOP[1] bit
+and aluop0(ALUOP[0], FUNCT7_0, ALUOP_TYPE);    // ALUOP[0] bit
 
 endmodule

@@ -56,6 +56,29 @@ module reg_file_tb;
             end
         /* TEST 1 ends here! */
 
+        /* 
+            TEST 2 starts here!
+
+            Regfile module should not be able to write to R0. 
+            WRITE 10 to reg 1
+        */
+            WRITE_ADDRESS = 5'd0;
+            WRITE_DATA = 32'd10;
+            WRITE_ENABLE = 1'b1;
+
+            @(posedge CLK) begin
+                // wait for write to happen.
+                #3;
+                // read value of the address
+                DATA1_ADDRESS = 5'd0;
+                // wait for read to happen and check value
+                #3;
+                `assert(DATA1, 32'd0);
+                $display("TEST 2 Passed!");
+
+            end
+        /* TEST 1 ends here! */
+
         #500
         $finish;
     end
