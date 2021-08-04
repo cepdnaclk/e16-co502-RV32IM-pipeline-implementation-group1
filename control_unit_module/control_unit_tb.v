@@ -13,9 +13,9 @@ module control_unit_tb;
     wire OP1SEL, OP2SEL, MEM_WRITE, MEM_READ, REG_WRITE_EN;
     wire [1:0] WB_SEL;
     wire [4:0] ALU_OP;
-    wire [2:0] BRANCH_JUMP, IMM_SEL;
+    wire [2:0] BRANCH_JUMP, IMM_SEL, LOAD_SEL;
     
-    control_unit my_control_unit(OPCODE, FUNCT3, FUNCT7, OP1SEL, OP2SEL, MEM_WRITE, MEM_READ, REG_WRITE_EN, WB_SEL, ALU_OP, BRANCH_JUMP, IMM_SEL);
+    control_unit my_control_unit(OPCODE, FUNCT3, FUNCT7, OP1SEL, OP2SEL, MEM_WRITE, MEM_READ, REG_WRITE_EN, WB_SEL, ALU_OP, BRANCH_JUMP, IMM_SEL, LOAD_SEL);
 
     initial begin
 
@@ -181,10 +181,90 @@ module control_unit_tb;
 
         // TODO: Need to design the load and store
         // LB
+        OPCODE = `LOAD_OPCODE;
+        FUNCT3 = 3'b000;
+        FUNCT7 = 7'bxxxxxxx;
+        `DECODE_DELAY
+        `assert(OP1SEL,`DATA1);
+        `assert(OP2SEL,`IMM);
+        `assert(MEM_WRITE,`MEM_WRITE_0);
+        `assert(MEM_READ,`MEM_READ_1);
+        `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
+        `assert(WB_SEL,`MEM);
+        `assert(ALU_OP,`ADD);
+        `assert(BRANCH_JUMP,`NO);
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
+        `assert(LOAD_SEL,`LB);
+        $display("LB test passed!");
+
         // LH
+        OPCODE = `LOAD_OPCODE;
+        FUNCT3 = 3'b001;
+        FUNCT7 = 7'bxxxxxxx;
+        `DECODE_DELAY
+        `assert(OP1SEL,`DATA1);
+        `assert(OP2SEL,`IMM);
+        `assert(MEM_WRITE,`MEM_WRITE_0);
+        `assert(MEM_READ,`MEM_READ_1);
+        `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
+        `assert(WB_SEL,`MEM);
+        `assert(ALU_OP,`ADD);
+        `assert(BRANCH_JUMP,`NO);
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
+        `assert(LOAD_SEL,`LH);
+        $display("LH test passed!");
+
         // LW
+        OPCODE = `LOAD_OPCODE;
+        FUNCT3 = 3'b010;
+        FUNCT7 = 7'bxxxxxxx;
+        `DECODE_DELAY
+        `assert(OP1SEL,`DATA1);
+        `assert(OP2SEL,`IMM);
+        `assert(MEM_WRITE,`MEM_WRITE_0);
+        `assert(MEM_READ,`MEM_READ_1);
+        `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
+        `assert(WB_SEL,`MEM);
+        `assert(ALU_OP,`ADD);
+        `assert(BRANCH_JUMP,`NO);
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
+        `assert(LOAD_SEL,`LW);
+        $display("LW test passed!");
+
         // LBU
+        OPCODE = `LOAD_OPCODE;
+        FUNCT3 = 3'b100;
+        FUNCT7 = 7'bxxxxxxx;
+        `DECODE_DELAY
+        `assert(OP1SEL,`DATA1);
+        `assert(OP2SEL,`IMM);
+        `assert(MEM_WRITE,`MEM_WRITE_0);
+        `assert(MEM_READ,`MEM_READ_1);
+        `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
+        `assert(WB_SEL,`MEM);
+        `assert(ALU_OP,`ADD);
+        `assert(BRANCH_JUMP,`NO);
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
+        `assert(LOAD_SEL,`LBU);
+        $display("LBU test passed!");
+
         // LHU
+        OPCODE = `LOAD_OPCODE;
+        FUNCT3 = 3'b101;
+        FUNCT7 = 7'bxxxxxxx;
+        `DECODE_DELAY
+        `assert(OP1SEL,`DATA1);
+        `assert(OP2SEL,`IMM);
+        `assert(MEM_WRITE,`MEM_WRITE_0);
+        `assert(MEM_READ,`MEM_READ_1);
+        `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
+        `assert(WB_SEL,`MEM);
+        `assert(ALU_OP,`ADD);
+        `assert(BRANCH_JUMP,`NO);
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
+        `assert(LOAD_SEL,`LHU);
+        $display("LHU test passed!");
+
         // SB
         // SH
         // SW
@@ -621,6 +701,8 @@ module control_unit_tb;
         `assert(BRANCH_JUMP,`NO);
         // `assert(IMM_SEL,`I_SIGNED_TYPE);
         $display("REMU test passed!");
+
+        $display("\nAll tests passed!");
 
     end
 

@@ -73,3 +73,10 @@
 `define I_SIGNED_TYPE 3'b100
 `define I_SHIFT_TYPE 3'b101
 `define I_UNSIGNED_TYPE 3'b111
+
+// LOAD_SEL
+`define LB 3'b000
+`define LH 3'b001
+`define LW 3'b010
+`define LBU 3'b100
+`define LHU 3'b101
