@@ -702,7 +702,8 @@ module control_unit_tb;
         // `assert(IMM_SEL,`I_SIGNED_TYPE);
         $display("REMU test passed!");
 
-        $display("\nAll tests passed!");
+        $display();
+        $display("All tests passed!");
 
     end
 
