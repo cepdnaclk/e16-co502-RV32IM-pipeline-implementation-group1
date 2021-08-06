@@ -9,7 +9,7 @@ module control_unit (
     ALUOP,
     BRANCH_JUMP,
     IMM_SEL,
-    MEM_RW
+    READ_WRITE
 );
 
 // declare ports
@@ -21,7 +21,7 @@ output [1:0] WB_SEL;
 output [4:0] ALUOP;
 output [2:0] BRANCH_JUMP;
 output [2:0] IMM_SEL;
-output [3:0] MEM_RW;
+output [3:0] READ_WRITE;
 
 wire LUI, AUIPC, JAL, JALR, B_TYPE, LOAD, STORE, I_TYPE, R_TYPE;
 wire ALUOP_TYPE, BL;
@@ -102,21 +102,21 @@ and aluop1(ALUOP[1], FUNCT7_5, ALUOP_TYPE);    // ALUOP[1] bit
 and aluop0(ALUOP[0], FUNCT7_0, ALUOP_TYPE);    // ALUOP[0] bit
 
 //////////////////////////////////////////////
-// MEM_RW to cache memory
+// READ_WRITE to cache memory
 //////////////////////////////////////////////
-wire MEM_RW_AND1, MEM_RW_AND2, MEM_RW_AND3, MEM_RW_AND4, MEM_RW_AND5, MEM_RW_AND6, MEM_RW_AND7;
+wire READ_WRITE_AND1, READ_WRITE_AND2, READ_WRITE_AND3, READ_WRITE_AND4, READ_WRITE_AND5, READ_WRITE_AND6, READ_WRITE_AND7;
 
-and mem_rw_and1(MEM_RW_AND1, !STORE, LOAD, FUNCT3[2], !FUNCT3[1], !FUNCT3[0]);
-and mem_rw_and2(MEM_RW_AND2, !STORE, LOAD, FUNCT3[2], !FUNCT3[1], FUNCT3[0]);
-and mem_rw_and3(MEM_RW_AND3, STORE, !LOAD, !FUNCT3[2], !FUNCT3[1], FUNCT3[0]);
-and mem_rw_and4(MEM_RW_AND4, STORE, !LOAD, !FUNCT3[2], FUNCT3[1], !FUNCT3[0]);
-and mem_rw_and5(MEM_RW_AND5, STORE, !LOAD, !FUNCT3[2], !FUNCT3[1], !FUNCT3[0]);
-and mem_rw_and6(MEM_RW_AND6, !STORE, LOAD, !FUNCT3[2], FUNCT3[1], !FUNCT3[0]);
-and mem_rw_and7(MEM_RW_AND7, !STORE, LOAD, !FUNCT3[2], !FUNCT3[1], FUNCT3[0]);
+and mem_rw_and1(READ_WRITE_AND1, !STORE, LOAD, FUNCT3[2], !FUNCT3[1], !FUNCT3[0]);
+and mem_rw_and2(READ_WRITE_AND2, !STORE, LOAD, FUNCT3[2], !FUNCT3[1], FUNCT3[0]);
+and mem_rw_and3(READ_WRITE_AND3, STORE, !LOAD, !FUNCT3[2], !FUNCT3[1], FUNCT3[0]);
+and mem_rw_and4(READ_WRITE_AND4, STORE, !LOAD, !FUNCT3[2], FUNCT3[1], !FUNCT3[0]);
+and mem_rw_and5(READ_WRITE_AND5, STORE, !LOAD, !FUNCT3[2], !FUNCT3[1], !FUNCT3[0]);
+and mem_rw_and6(READ_WRITE_AND6, !STORE, LOAD, !FUNCT3[2], FUNCT3[1], !FUNCT3[0]);
+and mem_rw_and7(READ_WRITE_AND7, !STORE, LOAD, !FUNCT3[2], !FUNCT3[1], FUNCT3[0]);
 
-or mem_rw3(MEM_RW[3], LOAD, STORE);
-or mem_rw2(MEM_RW[2], MEM_RW_AND1, MEM_RW_AND2, MEM_RW_AND3, MEM_RW_AND4);
-or mem_rw1(MEM_RW[1], MEM_RW_AND3, MEM_RW_AND4, MEM_RW_AND5, MEM_RW_AND6);
-or mem_rw0(MEM_RW[0], MEM_RW_AND4, MEM_RW_AND5, MEM_RW_AND2, MEM_RW_AND7);
+or mem_rw3(READ_WRITE[3], LOAD, STORE);
+or mem_rw2(READ_WRITE[2], READ_WRITE_AND1, READ_WRITE_AND2, READ_WRITE_AND3, READ_WRITE_AND4);
+or mem_rw1(READ_WRITE[1], READ_WRITE_AND3, READ_WRITE_AND4, READ_WRITE_AND5, READ_WRITE_AND6);
+or mem_rw0(READ_WRITE[0], READ_WRITE_AND4, READ_WRITE_AND5, READ_WRITE_AND2, READ_WRITE_AND7);
 
 endmodule

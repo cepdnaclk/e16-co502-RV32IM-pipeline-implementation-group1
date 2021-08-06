@@ -14,9 +14,9 @@ module control_unit_tb;
     wire [1:0] WB_SEL;
     wire [4:0] ALU_OP;
     wire [2:0] BRANCH_JUMP, IMM_SEL;
-    wire [3:0] MEM_RW;
+    wire [3:0] READ_WRITE;
     
-    control_unit my_control_unit(OPCODE, FUNCT3, FUNCT7, OP1SEL, OP2SEL, REG_WRITE_EN, WB_SEL, ALU_OP, BRANCH_JUMP, IMM_SEL, MEM_RW);
+    control_unit my_control_unit(OPCODE, FUNCT3, FUNCT7, OP1SEL, OP2SEL, REG_WRITE_EN, WB_SEL, ALU_OP, BRANCH_JUMP, IMM_SEL, READ_WRITE);
 
     initial begin
 
@@ -34,9 +34,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`IMM_WB);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("LUI test passed!\n");
 
         // AUIPC
@@ -53,9 +53,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("AUIPC test passed!\n");
 
         // JAL
@@ -72,9 +72,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`PC_4);
         `assert(BRANCH_JUMP,`J);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("JAL test passed!\n");
 
         // JALR
@@ -91,9 +91,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`PC_4);
         `assert(BRANCH_JUMP,`J);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("JALR test passed!\n");
 
         // BEQ
@@ -110,9 +110,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
         `assert(BRANCH_JUMP,`BEQ);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("BEQ test passed!\n");
 
         // BNE
@@ -129,9 +129,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
         `assert(BRANCH_JUMP,`BNE);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("BNE test passed!\n");
 
         // BLT
@@ -148,9 +148,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
         `assert(BRANCH_JUMP,`BLT);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("BLT test passed!\n");
 
         // BGE
@@ -167,9 +167,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
         `assert(BRANCH_JUMP,`BGE);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("BGE test passed!\n");
 
         // BLTU
@@ -186,9 +186,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
         `assert(BRANCH_JUMP,`BLTU);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("BLTU test passed!\n");
 
         // BGEU
@@ -205,9 +205,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
         `assert(BRANCH_JUMP,`BGEU);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("BGEU test passed!\n");
 
         // LB
@@ -224,9 +224,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`LB);
+        `assert(READ_WRITE,`LB);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("LB test passed!\n");
 
         // LH
@@ -243,9 +243,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`LH);
+        `assert(READ_WRITE,`LH);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("LH test passed!\n");
 
         // LW
@@ -262,9 +262,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`LW);
+        `assert(READ_WRITE,`LW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("LW test passed!\n");
 
         // LBU
@@ -281,9 +281,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`LBU);
+        `assert(READ_WRITE,`LBU);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("LBU test passed!\n");
 
         // LHU
@@ -300,9 +300,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`LHU);
+        `assert(READ_WRITE,`LHU);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("LHU test passed!\n");
 
         // SB
@@ -319,9 +319,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`MEM);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`SB);
+        `assert(READ_WRITE,`SB);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SB test passed!\n");
 
         // SH
@@ -338,9 +338,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`MEM);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`SH);
+        `assert(READ_WRITE,`SH);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SH test passed!\n");
 
         // SW
@@ -357,9 +357,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`MEM);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`SW);
+        `assert(READ_WRITE,`SW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SW test passed!\n");
 
         // ADDI
@@ -376,9 +376,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("ADDI test passed!\n");
 
         // SLTI
@@ -395,9 +395,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SLTI test passed!\n");
 
         // SLTIU
@@ -414,9 +414,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SLTIU test passed!\n");
         
         // XORI
@@ -433,9 +433,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("XORI test passed!\n");
 
         // ORI
@@ -452,9 +452,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("ORI test passed!\n");
 
         // ANDI
@@ -471,9 +471,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("ANDI test passed!\n");
 
         // SLLI
@@ -490,9 +490,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SLLI test passed!\n");
         
         // SRLI
@@ -509,9 +509,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SRLI test passed!\n");
 
         // SRAI
@@ -528,9 +528,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SRAI test passed!\n");
 
         // ADD
@@ -547,9 +547,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("ADD test passed!\n");
 
         // SUB
@@ -566,9 +566,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SUB test passed!\n");
 
         // SLL
@@ -585,9 +585,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SLL test passed!\n");
 
         // SLT
@@ -604,9 +604,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SLT test passed!\n");
 
         // SLTU
@@ -623,9 +623,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SLTU test passed!\n");
 
         // XOR
@@ -642,9 +642,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("XOR test passed!\n");
 
         // SRL
@@ -661,9 +661,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SRL test passed!\n");
 
         // SRA
@@ -680,9 +680,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("SRA test passed!\n");
 
         // OR
@@ -699,9 +699,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("OR test passed!\n");
 
         // AND
@@ -718,9 +718,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("AND test passed!\n");
 
         // MUL
@@ -737,9 +737,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("MUL test passed!\n");
 
         // MULH
@@ -756,9 +756,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("MULH test passed!\n");
 
         // MULHSU
@@ -775,9 +775,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("MULHSU test passed!\n");
 
         // MULHU
@@ -794,9 +794,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("MULHU test passed!\n");
 
         // DIV
@@ -813,9 +813,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("DIV test passed!\n");
 
         // DIVU
@@ -832,9 +832,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("DIVU test passed!\n");
 
         // REM
@@ -851,9 +851,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("REM test passed!\n");
 
         // REMU
@@ -870,9 +870,9 @@ module control_unit_tb;
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(MEM_RW,`NO_RW);
+        `assert(READ_WRITE,`NO_RW);
         
-        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b READ_WRITE: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, READ_WRITE);
         $display("REMU test passed!\n");
 
         $display("All tests passed!");
