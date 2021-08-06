@@ -4,26 +4,24 @@ module control_unit (
     FUNCT7,
     OP1SEL,
     OP2SEL,
-    MEM_WRITE,
-    MEM_READ,
     REG_WRITE_EN,
     WB_SEL,
     ALUOP,
     BRANCH_JUMP,
     IMM_SEL,
-    LOAD_SEL
+    MEM_RW
 );
 
 // declare ports
 input [6:0] OPCODE;
 input [2:0] FUNCT3;
 input [6:0] FUNCT7;
-output OP1SEL, OP2SEL, MEM_WRITE, MEM_READ, REG_WRITE_EN;
+output OP1SEL, OP2SEL, REG_WRITE_EN;
 output [1:0] WB_SEL;
 output [4:0] ALUOP;
 output [2:0] BRANCH_JUMP;
 output [2:0] IMM_SEL;
-output [2:0] LOAD_SEL;
+output [3:0] MEM_RW;
 
 wire LUI, AUIPC, JAL, JALR, B_TYPE, LOAD, STORE, I_TYPE, R_TYPE;
 wire ALUOP_TYPE, BL;
@@ -41,8 +39,6 @@ and r_type(R_TYPE, !OPCODE[6], OPCODE[5], OPCODE[4], !OPCODE[3], !OPCODE[2], OPC
 
 or op1sel(OP1SEL, AUIPC, JAL, B_TYPE);
 or op2sel(OP2SEL, AUIPC, JAL, JALR, B_TYPE, LOAD, STORE, I_TYPE);
-assign MEM_WRITE = STORE;
-assign MEM_READ = LOAD;
 or reg_write_en(REG_WRITE_EN, LUI, AUIPC, JAL, JALR, LOAD, I_TYPE, R_TYPE);
 or wb_sel1(WB_SEL[1], LUI, JAL, JALR);
 or wb_sel0(WB_SEL[0], JAL, JALR, LOAD);
@@ -106,9 +102,21 @@ and aluop1(ALUOP[1], FUNCT7_5, ALUOP_TYPE);    // ALUOP[1] bit
 and aluop0(ALUOP[0], FUNCT7_0, ALUOP_TYPE);    // ALUOP[0] bit
 
 //////////////////////////////////////////////
-// LOAD_SEL
+// MEM_RW to cache memory
 //////////////////////////////////////////////
+wire MEM_RW_AND1, MEM_RW_AND2, MEM_RW_AND3, MEM_RW_AND4, MEM_RW_AND5, MEM_RW_AND6, MEM_RW_AND7;
 
-assign LOAD_SEL = FUNCT3;
+and mem_rw_and1(MEM_RW_AND1, !STORE, LOAD, FUNCT3[2], !FUNCT3[1], !FUNCT3[0]);
+and mem_rw_and2(MEM_RW_AND2, !STORE, LOAD, FUNCT3[2], !FUNCT3[1], FUNCT3[0]);
+and mem_rw_and3(MEM_RW_AND3, STORE, !LOAD, !FUNCT3[2], !FUNCT3[1], FUNCT3[0]);
+and mem_rw_and4(MEM_RW_AND4, STORE, !LOAD, !FUNCT3[2], FUNCT3[1], !FUNCT3[0]);
+and mem_rw_and5(MEM_RW_AND5, STORE, !LOAD, !FUNCT3[2], !FUNCT3[1], !FUNCT3[0]);
+and mem_rw_and6(MEM_RW_AND6, !STORE, LOAD, !FUNCT3[2], FUNCT3[1], !FUNCT3[0]);
+and mem_rw_and7(MEM_RW_AND7, !STORE, LOAD, !FUNCT3[2], !FUNCT3[1], FUNCT3[0]);
+
+or mem_rw3(MEM_RW[3], LOAD, STORE);
+or mem_rw2(MEM_RW[2], MEM_RW_AND1, MEM_RW_AND2, MEM_RW_AND3, MEM_RW_AND4);
+or mem_rw1(MEM_RW[1], MEM_RW_AND3, MEM_RW_AND4, MEM_RW_AND5, MEM_RW_AND6);
+or mem_rw0(MEM_RW[0], MEM_RW_AND4, MEM_RW_AND5, MEM_RW_AND2, MEM_RW_AND7);
 
 endmodule

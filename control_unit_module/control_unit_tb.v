@@ -10,699 +10,871 @@ module control_unit_tb;
     reg [2:0] FUNCT3;
     reg [6:0] FUNCT7;
     
-    wire OP1SEL, OP2SEL, MEM_WRITE, MEM_READ, REG_WRITE_EN;
+    wire OP1SEL, OP2SEL, REG_WRITE_EN;
     wire [1:0] WB_SEL;
     wire [4:0] ALU_OP;
-    wire [2:0] BRANCH_JUMP, IMM_SEL, LOAD_SEL;
+    wire [2:0] BRANCH_JUMP, IMM_SEL;
+    wire [3:0] MEM_RW;
     
-    control_unit my_control_unit(OPCODE, FUNCT3, FUNCT7, OP1SEL, OP2SEL, MEM_WRITE, MEM_READ, REG_WRITE_EN, WB_SEL, ALU_OP, BRANCH_JUMP, IMM_SEL, LOAD_SEL);
+    control_unit my_control_unit(OPCODE, FUNCT3, FUNCT7, OP1SEL, OP2SEL, REG_WRITE_EN, WB_SEL, ALU_OP, BRANCH_JUMP, IMM_SEL, MEM_RW);
 
     initial begin
 
         // LUI
+        $display("Test 1 : LUI Control Signal Test");
         OPCODE = `LUI_OPCODE;
         FUNCT3 = 3'bxxx;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`U_TYPE);
         // `assert(OP1SEL,1'bx);
         // `assert(OP2SEL,1'bx);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        // `assert(ALU_OP,5'bxxxxx);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`IMM_WB);
-        // `assert(ALU_OP,5'bxxxxx);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`U_TYPE);
-        $display("LUI test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("LUI test passed!\n");
 
         // AUIPC
+        $display("Test 2 : AUIPC Control Signal Test");
         OPCODE = `AUIPC_OPCODE;
         FUNCT3 = 3'bxxx;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`U_TYPE);
         `assert(OP1SEL,`PC);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`U_TYPE);
-        $display("AUIPC test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("AUIPC test passed!\n");
 
         // JAL
+        $display("Test 3 : JAL Control Signal Test");
         OPCODE = `JAL_OPCODE;
         FUNCT3 = 3'bxxx;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`J_TYPE);
         `assert(OP1SEL,`PC);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`PC_4);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`J);
-        `assert(IMM_SEL,`J_TYPE);
-        $display("JAL test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("JAL test passed!\n");
 
         // JALR
+        $display("Test 4 : JALR Control Signal Test");
         OPCODE = `JALR_OPCODE;
         FUNCT3 = 3'b000;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`PC_4);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`J);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("JALR test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("JALR test passed!\n");
 
         // BEQ
+        $display("Test 5 : BEQ Control Signal Test");
         OPCODE = `B_TYPE_OPCODE;
         FUNCT3 = 3'b000;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`B_TYPE);
         `assert(OP1SEL,`PC);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`BEQ);
-        `assert(IMM_SEL,`B_TYPE);
-        $display("BEQ test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("BEQ test passed!\n");
 
         // BNE
+        $display("Test 6 : BNE Control Signal Test");
         OPCODE = `B_TYPE_OPCODE;
         FUNCT3 = 3'b001;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`B_TYPE);
         `assert(OP1SEL,`PC);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`BNE);
-        `assert(IMM_SEL,`B_TYPE);
-        $display("BNE test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("BNE test passed!\n");
 
         // BLT
+        $display("Test 7 : BLT Control Signal Test");
         OPCODE = `B_TYPE_OPCODE;
         FUNCT3 = 3'b100;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`B_TYPE);
         `assert(OP1SEL,`PC);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`BLT);
-        `assert(IMM_SEL,`B_TYPE);
-        $display("BLT test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("BLT test passed!\n");
 
         // BGE
+        $display("Test 8 : BGE Control Signal Test");
         OPCODE = `B_TYPE_OPCODE;
         FUNCT3 = 3'b101;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`B_TYPE);
         `assert(OP1SEL,`PC);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`BGE);
-        `assert(IMM_SEL,`B_TYPE);
-        $display("BGE test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("BGE test passed!\n");
 
         // BLTU
+        $display("Test 9 : BLTU Control Signal Test");
         OPCODE = `B_TYPE_OPCODE;
         FUNCT3 = 3'b110;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`B_TYPE);
         `assert(OP1SEL,`PC);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`BLTU);
-        `assert(IMM_SEL,`B_TYPE);
-        $display("BLTU test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("BLTU test passed!\n");
 
         // BGEU
+        $display("Test 10 : BGEU Control Signal Test");
         OPCODE = `B_TYPE_OPCODE;
         FUNCT3 = 3'b111;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`B_TYPE);
         `assert(OP1SEL,`PC);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
         // `assert(WB_SEL,`PC_4);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`BGEU);
-        `assert(IMM_SEL,`B_TYPE);
-        $display("BGEU test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("BGEU test passed!\n");
 
-        // TODO: Need to design the load and store
         // LB
+        $display("Test 11 : LB Control Signal Test");
         OPCODE = `LOAD_OPCODE;
         FUNCT3 = 3'b000;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_1);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        `assert(LOAD_SEL,`LB);
-        $display("LB test passed!");
+        `assert(MEM_RW,`LB);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("LB test passed!\n");
 
         // LH
+        $display("Test 12 : LH Control Signal Test");
         OPCODE = `LOAD_OPCODE;
         FUNCT3 = 3'b001;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_1);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        `assert(LOAD_SEL,`LH);
-        $display("LH test passed!");
+        `assert(MEM_RW,`LH);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("LH test passed!\n");
 
         // LW
+        $display("Test 13 : LW Control Signal Test");
         OPCODE = `LOAD_OPCODE;
         FUNCT3 = 3'b010;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_1);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        `assert(LOAD_SEL,`LW);
-        $display("LW test passed!");
+        `assert(MEM_RW,`LW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("LW test passed!\n");
 
         // LBU
+        $display("Test 14 : LBU Control Signal Test");
         OPCODE = `LOAD_OPCODE;
         FUNCT3 = 3'b100;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_1);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        `assert(LOAD_SEL,`LBU);
-        $display("LBU test passed!");
+        `assert(MEM_RW,`LBU);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("LBU test passed!\n");
 
         // LHU
+        $display("Test 15 : LHU Control Signal Test");
         OPCODE = `LOAD_OPCODE;
         FUNCT3 = 3'b101;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_1);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`MEM);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        `assert(LOAD_SEL,`LHU);
-        $display("LHU test passed!");
+        `assert(MEM_RW,`LHU);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("LHU test passed!\n");
 
         // SB
+        $display("Test 16 : SB Control Signal Test");
+        OPCODE = `STORE_OPCODE;
+        FUNCT3 = 3'b000;
+        FUNCT7 = 7'bxxxxxxx;
+        `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`S_TYPE);
+        `assert(OP1SEL,`DATA1);
+        `assert(OP2SEL,`IMM);
+        `assert(ALU_OP,`ADD);
+        `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
+        // `assert(WB_SEL,`MEM);
+        `assert(BRANCH_JUMP,`NO);
+        `assert(MEM_RW,`SB);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SB test passed!\n");
+
         // SH
+        $display("Test 17 : SH Control Signal Test");
+        OPCODE = `STORE_OPCODE;
+        FUNCT3 = 3'b001;
+        FUNCT7 = 7'bxxxxxxx;
+        `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`S_TYPE);
+        `assert(OP1SEL,`DATA1);
+        `assert(OP2SEL,`IMM);
+        `assert(ALU_OP,`ADD);
+        `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
+        // `assert(WB_SEL,`MEM);
+        `assert(BRANCH_JUMP,`NO);
+        `assert(MEM_RW,`SH);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SH test passed!\n");
+
         // SW
+        $display("Test 18 : SW Control Signal Test");
+        OPCODE = `STORE_OPCODE;
+        FUNCT3 = 3'b010;
+        FUNCT7 = 7'bxxxxxxx;
+        `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`S_TYPE);
+        `assert(OP1SEL,`DATA1);
+        `assert(OP2SEL,`IMM);
+        `assert(ALU_OP,`ADD);
+        `assert(REG_WRITE_EN,`REG_WRITE_EN_0);
+        // `assert(WB_SEL,`MEM);
+        `assert(BRANCH_JUMP,`NO);
+        `assert(MEM_RW,`SW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SW test passed!\n");
 
         // ADDI
+        $display("Test 19 : ADDI Control Signal Test");
         OPCODE = `I_TYPE_OPCODE;
         FUNCT3 = 3'b000;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("ADDI test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("ADDI test passed!\n");
 
         // SLTI
+        $display("Test 20 : SLTI Control Signal Test");
         OPCODE = `I_TYPE_OPCODE;
         FUNCT3 = 3'b010;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SLT);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SLT);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("SLTI test passed!");
+        `assert(MEM_RW,`NO_RW);
         
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SLTI test passed!\n");
+
         // SLTIU
+        $display("Test 21 : SLTIU Control Signal Test");
         OPCODE = `I_TYPE_OPCODE;
         FUNCT3 = 3'b011;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_UNSIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SLTU);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SLTU);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_UNSIGNED_TYPE);
-        $display("SLTIU test passed!");
-
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SLTIU test passed!\n");
+        
         // XORI
+        $display("Test 22 : XORI Control Signal Test");
         OPCODE = `I_TYPE_OPCODE;
         FUNCT3 = 3'b100;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`XOR);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`XOR);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("XORI test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("XORI test passed!\n");
 
         // ORI
+        $display("Test 23 : ORI Control Signal Test");
         OPCODE = `I_TYPE_OPCODE;
         FUNCT3 = 3'b110;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`OR);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`OR);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("ORI test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("ORI test passed!\n");
 
         // ANDI
+        $display("Test 24 : ANDI Control Signal Test");
         OPCODE = `I_TYPE_OPCODE;
         FUNCT3 = 3'b111;
         FUNCT7 = 7'bxxxxxxx;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SIGNED_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`AND);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`AND);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("ANDI test passed!");
+        `assert(MEM_RW,`NO_RW);
         
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("ANDI test passed!\n");
+
         // SLLI
+        $display("Test 25 : SLLI Control Signal Test");
         OPCODE = `I_TYPE_OPCODE;
         FUNCT3 = 3'b001;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SLL);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SLL);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SHIFT_TYPE);
-        $display("SLLI test passed!");
-
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SLLI test passed!\n");
+        
         // SRLI
+        $display("Test 26 : SRLI Control Signal Test");
         OPCODE = `I_TYPE_OPCODE;
         FUNCT3 = 3'b101;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SRL);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SRL);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SHIFT_TYPE);
-        $display("SRLI test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SRLI test passed!\n");
 
         // SRAI
+        $display("Test 27 : SRAI Control Signal Test");
         OPCODE = `I_TYPE_OPCODE;
         FUNCT3 = 3'b101;
         FUNCT7 = 7'b0100000;
         `DECODE_DELAY
+        #0;
+        `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`IMM);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SRA);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SRA);
         `assert(BRANCH_JUMP,`NO);
-        `assert(IMM_SEL,`I_SHIFT_TYPE);
-        $display("SRAI test passed!");
-
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SRAI test passed!\n");
 
         // ADD
+        $display("Test 28 : ADD Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b000;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`ADD);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`ADD);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("ADD test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("ADD test passed!\n");
 
         // SUB
+        $display("Test 29 : SUB Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b000;
         FUNCT7 = 7'b0100000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SUB);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SUB);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("SUB test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SUB test passed!\n");
 
         // SLL
+        $display("Test 30 : SLL Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b001;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SLL);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SLL);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("SLL test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SLL test passed!\n");
 
         // SLT
+        $display("Test 31 : SLT Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b010;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SLT);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SLT);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("SLT test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SLT test passed!\n");
 
         // SLTU
+        $display("Test 32 : SLTU Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b011;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SLTU);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SLTU);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("SLTU test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SLTU test passed!\n");
 
         // XOR
+        $display("Test 33 : XOR Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b100;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`XOR);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`XOR);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("XOR test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("XOR test passed!\n");
 
         // SRL
+        $display("Test 34 : SRL Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b101;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SRL);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SRL);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("SRL test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SRL test passed!\n");
 
         // SRA
+        $display("Test 35 : SRA Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b101;
         FUNCT7 = 7'b0100000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`SRA);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`SRA);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("SRA test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("SRA test passed!\n");
 
         // OR
+        $display("Test 36 : OR Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b110;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`OR);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`OR);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("OR test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("OR test passed!\n");
 
         // AND
+        $display("Test 37 : AND Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b111;
         FUNCT7 = 7'b0000000;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`AND);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`AND);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("AND test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("AND test passed!\n");
 
         // MUL
+        $display("Test 38 : MUL Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b000;
         FUNCT7 = 7'b0000001;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`MUL);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`MUL);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("MUL test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("MUL test passed!\n");
 
         // MULH
+        $display("Test 39 : MULH Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b001;
         FUNCT7 = 7'b0000001;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`MULH);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`MULH);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("MULH test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("MULH test passed!\n");
 
         // MULHSU
+        $display("Test 40 : MULHSU Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b010;
         FUNCT7 = 7'b0000001;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`MULHSU);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`MULHSU);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("MULHSU test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("MULHSU test passed!\n");
 
         // MULHU
+        $display("Test 41 : MULHU Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b011;
         FUNCT7 = 7'b0000001;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`MULHU);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`MULHU);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("MULHU test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("MULHU test passed!\n");
 
         // DIV
+        $display("Test 42 : DIV Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b100;
         FUNCT7 = 7'b0000001;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`DIV);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`DIV);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("DIV test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("DIV test passed!\n");
 
         // DIVU
+        $display("Test 43 : DIVU Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b101;
         FUNCT7 = 7'b0000001;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`DIVU);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`DIVU);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("DIVU test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("DIVU test passed!\n");
 
         // REM
+        $display("Test 44 : REM Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b110;
         FUNCT7 = 7'b0000001;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`REM);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`REM);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("REM test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("REM test passed!\n");
 
         // REMU
+        $display("Test 45 : REMU Control Signal Test");
         OPCODE = `R_TYPE_OPCODE;
         FUNCT3 = 3'b111;
         FUNCT7 = 7'b0000001;
         `DECODE_DELAY
+        #0;
+        // `assert(IMM_SEL,`I_SHIFT_TYPE);
         `assert(OP1SEL,`DATA1);
         `assert(OP2SEL,`DATA2);
-        `assert(MEM_WRITE,`MEM_WRITE_0);
-        `assert(MEM_READ,`MEM_READ_0);
+        `assert(ALU_OP,`REMU);
         `assert(REG_WRITE_EN,`REG_WRITE_EN_1);
         `assert(WB_SEL,`ALU);
-        `assert(ALU_OP,`REMU);
         `assert(BRANCH_JUMP,`NO);
-        // `assert(IMM_SEL,`I_SIGNED_TYPE);
-        $display("REMU test passed!");
+        `assert(MEM_RW,`NO_RW);
+        
+        $display("IMM_SEL: %b, OP1SEL: %b OP2SEL: %b ALU_OP: %b REG_WRITE_EN: %b WB_SEL: %b BRANCH_JUMP: %b MEM_RW: %b", IMM_SEL, OP1SEL, OP2SEL, ALU_OP, REG_WRITE_EN, WB_SEL, BRANCH_JUMP, MEM_RW);
+        $display("REMU test passed!\n");
 
-        $display();
         $display("All tests passed!");
 
     end
