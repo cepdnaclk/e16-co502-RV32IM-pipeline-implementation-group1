@@ -1,7 +1,3 @@
-`include "../utils/encodings.v"
-
-`timescale 1ns/100ps
-
 module alu(DATA1, DATA2, RESULT, SELECT);
 
     // port declaration
@@ -41,9 +37,9 @@ module alu(DATA1, DATA2, RESULT, SELECT);
     assign #1 AND_RESULT = DATA1 & DATA2;       // bitwise logical AND
     assign #1 OR_RESULT = DATA1 | DATA2;        // bitwise logical OR
     assign #1 XOR_RESULT = DATA1 ^ DATA2;       // bitwise logical XOR
-    assign #1 SLL_RESULT = DATA1 << DATA2;      // Logical Left Shift
-    assign #1 SRL_RESULT = DATA1 >> DATA2;      // Logical Right Shift
-    assign #1 SRA_RESULT = DATA1 >>> DATA2;     // Arithmetic Right shift
+    assign #2 SLL_RESULT = DATA1 << DATA2;      // Logical Left Shift
+    assign #2 SRL_RESULT = DATA1 >> DATA2;      // Logical Right Shift
+    assign #2 SRA_RESULT = DATA1 >>> DATA2;     // Arithmetic Right shift
     
     // --> upper 32 bit
     assign #3 MUL_RESULT = DATA1 * DATA2;       // Multiplication

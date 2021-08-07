@@ -1,18 +1,4 @@
-module data_cache(
-    CLK,
-    RESET,
-    BUSYWAIT,
-    READ_WRITE,
-    WRITEDATA,
-    READDATA,
-    ADDRESS,
-    MEM_BUSYWAIT,
-    MEM_READ,
-    MEM_WRITE,
-    MEM_READDATA,
-    MEM_WRITEDATA,
-    MEM_ADDRESS
-);
+module data_cache(CLK, RESET, BUSYWAIT, READ_WRITE, WRITEDATA, READDATA, ADDRESS, MEM_BUSYWAIT, MEM_READ, MEM_WRITE, MEM_READDATA, MEM_WRITEDATA, MEM_ADDRESS);
 
 //port declaration
 input CLK, RESET, MEM_BUSYWAIT;
@@ -83,7 +69,7 @@ assign LB[7:0] = DATA_BYTE;
 assign LB[31:8] = {24{DATA_BYTE[7]}};
 
 assign LH[15:0] = DATA_HALF;
-assign LH[31:16] = {24{DATA_HALF[15]}};
+assign LH[31:16] = {16{DATA_HALF[15]}};
 
 assign LW = DATA_WORD;
 
@@ -169,7 +155,7 @@ begin
         begin
             MEM_READ = 0;
             MEM_WRITE = 0;
-            MEM_ADDRESS = 27'dx;
+            MEM_ADDRESS = 28'dx;
             MEM_WRITEDATA = 128'dx;
         end
          

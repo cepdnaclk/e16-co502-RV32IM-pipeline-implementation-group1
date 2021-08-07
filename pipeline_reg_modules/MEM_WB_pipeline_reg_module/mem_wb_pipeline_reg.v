@@ -47,7 +47,7 @@ module mem_wb_pipeline_reg(
         #1
         if (RESET) begin
             OUT_INSTRUCTION = 5'd0;
-            OUT_PC_4 = -32'd4;
+            OUT_PC_4 = 32'd0;
             OUT_ALU_RESULT = 32'd0;
             OUT_IMMEDIATE =  32'd0;
             OUT_DMEM_OUT = 32'd0;
