@@ -79,6 +79,16 @@ char* opcodeFromKeyword(char* keyword) {
         strcasecmp(keyword, "ecall") == 0 ||
         strcasecmp(keyword, "ebreak") == 0 
     ) return "1110011";
+    if(
+        strcasecmp(keyword, "mul") == 0 ||
+        strcasecmp(keyword, "mulh") == 0 ||
+        strcasecmp(keyword, "mulhsu") == 0 ||
+        strcasecmp(keyword, "mulhu") == 0 ||
+        strcasecmp(keyword, "div") == 0 ||
+        strcasecmp(keyword, "divu") == 0 ||
+        strcasecmp(keyword, "rem") == 0 ||
+        strcasecmp(keyword, "remu") == 0
+    ) return "0110011";
     return "0000000";
 }
 
@@ -274,8 +284,16 @@ int encodeToFormat(FILE* fo,char* keyword, char* type, char* destination_registe
     } else if (strcmp(type, "I_TYPE") == 0) {
         char imm11_0[13]="";
         strncpy(imm11_0, immediateRef+(31 - 11), 12);
-        if(strcasecmp(keyword, "jalr") == 0) strcpy(base_register, src1_register);
-        sprintf(pline, "%.12s %.5s %.3s %.5s %.7s", imm11_0, base_register, func3, destination_register, opcode);
+        if(
+            strcasecmp(keyword, "lb") == 0 || 
+            strcasecmp(keyword, "lh") == 0 ||
+            strcasecmp(keyword, "lw") == 0 ||
+            strcasecmp(keyword, "lbu") == 0 ||
+            strcasecmp(keyword, "lhu") == 0 ) {
+                sprintf(pline, "%.12s %.5s %.3s %.5s %.7s", imm11_0, base_register, func3, destination_register, opcode);
+            }else {
+                sprintf(pline, "%.12s %.5s %.3s %.5s %.7s", imm11_0, src1_register, func3, destination_register, opcode);
+            }
     } else if (strcmp(type, "S_TYPE") == 0) {
         char imm11_5[8] = "";
         char imm4_0[6] = "";
@@ -305,19 +323,24 @@ int encodeToFormat(FILE* fo,char* keyword, char* type, char* destination_registe
 int operandCountChecker(char* type, char* keyword) {
     if(strcmp(type, "R_TYPE") == 0 || strcmp(type, "SFT_TYPE") == 0 || strcmp(type, "B_TYPE") == 0) return 4;
     if(strcmp(type, "J_TYPE") == 0 || strcmp(type, "U_TYPE") == 0) return 3;
-    if(strcmp(type, "I_TYPE") == 0 || strcmp(type, "S_TYPE") == 0) {
-        if(strcasecmp(keyword, "jalr") == 0 ) return 4;
-        return 3;
-    };
+    if(strcmp(type, "S_TYPE") == 0) return 3;
+    if(strcmp(type, "I_TYPE") == 0) return 4;
     return 0;
 }
 
 char* operandOrderChecker(char* type, char* keyword) {
     if(strcmp(type, "R_TYPE") == 0) return "operand_operand_operand";
     if(strcmp(type, "J_TYPE") == 0 || strcmp(type, "U_TYPE") == 0) return "operand_offset";
-    if(strcmp(type, "I_TYPE") == 0 || strcmp(type, "S_TYPE") == 0) {
-        if(strcasecmp(keyword, "jalr") == 0 ) return "operand_operand_offset";
-        return "operand_base-and-offset";
+    if(strcmp(type, "S_TYPE") == 0) return "operand_base-and-offset";
+    if(strcmp(type, "I_TYPE") == 0) {
+        if(
+            strcasecmp(keyword, "lw") == 0 ||
+            strcasecmp(keyword, "lh") == 0 ||
+            strcasecmp(keyword, "lbu") == 0 ||
+            strcasecmp(keyword, "lhu") == 0
+        ) return "operand_base-and-offset";
+
+        return "operand_operand_offset";
     }
     if(strcmp(type, "SFT_TYPE") == 0 || strcmp(type, "B_TYPE") == 0) return "operand_operand_offset";
     return "";
@@ -357,7 +380,6 @@ int main(int argc, char *argv[]) {
             continue;
         }
         
-        char pline[LINE_SIZE]="";
 		char tline[LINE_SIZE];
         char operandOrder[LINE_SIZE]="";
         char keyword[10]="";
@@ -457,31 +479,33 @@ int main(int argc, char *argv[]) {
                     base_register[5] = '\0';
                 }else {
                     strcat(operandOrder, OFFSET);
-                    int immediateValue = 0;
-                    int length = strlen(in_token);
-                    for (int i = 0; i < length; i++){
-                        if(in_token[i] == '\n') continue;
-                        if(isdigit(in_token[i])) {
-                            immediateValue = immediateValue*10 + (in_token[i] - '0');
-                        }
-                    }
-
-                    strcpy(immediate, "");
-                    for (int i = 31; i >= 0; i--){
-                        int digit = immediateValue >> i;
-                        if(digit & 1) {
-                            immediate[31 - i] = '1';
-                        }else {
-                            immediate[31 - i] = '0';
-                        }
-                    }
-                    immediate[32] = '\0';
                 }
+                int immediateValue = 0;
+                int length = strlen(in_token);
+                for (int i = 0; i < length; i++){
+                    if(in_token[i] == '(') break;
+                    if(in_token[i] == '\n') continue;
+                    if(isdigit(in_token[i])) {
+                        immediateValue = immediateValue*10 + (in_token[i] - '0');
+                    }
+                }
+
+                strcpy(immediate, "");
+                for (int i = 31; i >= 0; i--){
+                    int digit = immediateValue >> i;
+                    if(digit & 1) {
+                        immediate[31 - i] = '1';
+                    }else {
+                        immediate[31 - i] = '0';
+                    }
+                }
+                immediate[32] = '\0';
            }
            
            in_token = strtok(NULL,delim);
            count ++;
         }
+        PRINT("Operand order for %s %s instruction :%s\n", type, keyword, operandOrder);
         if(strcmp(operandOrder, operandOrderChecker(type, keyword))) errorHandler("Invalid operand order", out_file, lineNumber, argv[1]);
         encodeToFormat(fo, keyword, type, destination_register, src1_register, src2_register, immediate, base_register);
     }
