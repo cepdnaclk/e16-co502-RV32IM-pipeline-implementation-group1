@@ -3,7 +3,7 @@
 `include "../utils/encodings.v"
 `include "alu.v"
 
-module reg_file_tb;
+module alu_tb;
 
     reg CLK, RESET;
     wire [31:0] RESULT;
@@ -13,13 +13,9 @@ module reg_file_tb;
     alu myalu(DATA1, DATA2, RESULT, SELECT);
     
     initial begin
-        CLK = 1'b0;
-        #1
-        RESET = 1'b1;
-
-        #5
-        RESET = 1'b0;
-
+        $dumpfile("alu_wavedata.vcd");
+        $dumpvars(0, alu_tb);
+        #1;
         /* 
             TEST 1 starts here!
 
@@ -209,11 +205,6 @@ module reg_file_tb;
 
         #500
         $finish;
-    end
-
-    // clock genaration.
-    always begin
-        #4 CLK = ~CLK;
     end
 
 endmodule

@@ -2,26 +2,44 @@ module control_unit (
     OPCODE,
     FUNCT3,
     FUNCT7,
-    OP1SEL,
-    OP2SEL,
-    REG_WRITE_EN,
-    WB_SEL,
-    ALUOP,
-    BRANCH_JUMP,
-    IMM_SEL,
-    READ_WRITE
+    OP1SEL_OUT,
+    OP2SEL_OUT,
+    REG_WRITE_EN_OUT,
+    WB_SEL_OUT,
+    ALUOP_OUT,
+    BRANCH_JUMP_OUT,
+    IMM_SEL_OUT,
+    READ_WRITE_OUT
 );
+
+`define DECODE_DELAY #1
 
 // declare ports
 input [6:0] OPCODE;
 input [2:0] FUNCT3;
 input [6:0] FUNCT7;
-output OP1SEL, OP2SEL, REG_WRITE_EN;
-output [1:0] WB_SEL;
-output [4:0] ALUOP;
-output [2:0] BRANCH_JUMP;
-output [2:0] IMM_SEL;
-output [3:0] READ_WRITE;
+output OP1SEL_OUT, OP2SEL_OUT, REG_WRITE_EN_OUT;
+output [1:0] WB_SEL_OUT;
+output [4:0] ALUOP_OUT;
+output [2:0] BRANCH_JUMP_OUT;
+output [2:0] IMM_SEL_OUT;
+output [3:0] READ_WRITE_OUT;
+
+assign `DECODE_DELAY OP1SEL_OUT = OP1SEL;
+assign `DECODE_DELAY OP2SEL_OUT = OP2SEL;
+assign `DECODE_DELAY REG_WRITE_EN_OUT = REG_WRITE_EN;
+assign `DECODE_DELAY WB_SEL_OUT = WB_SEL;
+assign `DECODE_DELAY ALUOP_OUT = ALUOP;
+assign `DECODE_DELAY BRANCH_JUMP_OUT = BRANCH_JUMP;
+assign `DECODE_DELAY IMM_SEL_OUT = IMM_SEL;
+assign `DECODE_DELAY READ_WRITE_OUT = READ_WRITE;
+
+wire OP1SEL, OP2SEL, REG_WRITE_EN;
+wire [1:0] WB_SEL;
+wire [4:0] ALUOP;
+wire [2:0] BRANCH_JUMP;
+wire [2:0] IMM_SEL;
+wire [3:0] READ_WRITE;
 
 wire LUI, AUIPC, JAL, JALR, B_TYPE, LOAD, STORE, I_TYPE, R_TYPE;
 wire ALUOP_TYPE, BL;
