@@ -7,6 +7,7 @@ module id_ex_pipeline_reg_tb;
     reg [4:0] IN_INSTRUCTION, IN_ALU_OP;
     reg [2:0] IN_BRANCH_JUMP;
     reg [1:0] IN_WB_SEL;
+    reg [3:0] IN_READ_WRITE;
     
     reg [31:0] IN_PC,
             IN_DATA1,
@@ -15,8 +16,6 @@ module id_ex_pipeline_reg_tb;
 
     reg IN_OP1_SEL,
         IN_OP2_SEL,
-        IN_MEM_WRITE,
-        IN_MEM_READ, 
         IN_REG_WRITE_EN,
         CLK, 
         RESET, 
@@ -25,6 +24,7 @@ module id_ex_pipeline_reg_tb;
     wire [4:0] OUT_ALU_OP, OUT_INSTRUCTION;
     wire [2:0] OUT_BRANCH_JUMP;
     wire [1:0] OUT_WB_SEL;
+    wire [3:0] OUT_READ_WRITE;
 
     wire [31:0] OUT_PC,
                     OUT_DATA1,
@@ -33,8 +33,6 @@ module id_ex_pipeline_reg_tb;
 
     wire OUT_OP1_SEL, 
         OUT_OP2_SEL,
-        OUT_MEM_WRITE,
-        OUT_MEM_READ,
         OUT_REG_WRITE_EN;
 
 
@@ -47,8 +45,7 @@ module id_ex_pipeline_reg_tb;
                                                 IN_OP2_SEL,
                                                 IN_ALU_OP,
                                                 IN_BRANCH_JUMP,
-                                                IN_MEM_WRITE,
-                                                IN_MEM_READ, 
+                                                IN_READ_WRITE,
                                                 IN_WB_SEL,
                                                 IN_REG_WRITE_EN,
                                                 OUT_INSTRUCTION,
@@ -60,8 +57,7 @@ module id_ex_pipeline_reg_tb;
                                                 OUT_OP2_SEL,
                                                 OUT_ALU_OP,
                                                 OUT_BRANCH_JUMP,
-                                                OUT_MEM_WRITE,
-                                                OUT_MEM_READ,
+                                                OUT_READ_WRITE,
                                                 OUT_WB_SEL,
                                                 OUT_REG_WRITE_EN,
                                                 CLK, 
@@ -84,8 +80,7 @@ module id_ex_pipeline_reg_tb;
         IN_OP2_SEL = 1'b1;
         IN_ALU_OP = 5'd15;
         IN_BRANCH_JUMP = 3'd2;
-        IN_MEM_WRITE = 1'b1;
-        IN_MEM_READ = 1'b1; 
+        IN_READ_WRITE = 4'd1;
         IN_WB_SEL = 2'b01;
         IN_REG_WRITE_EN = 1'b0;
 
@@ -112,8 +107,7 @@ module id_ex_pipeline_reg_tb;
         `assert(OUT_OP2_SEL, 1'b0);
         `assert(OUT_ALU_OP, 5'd0);
         `assert(OUT_BRANCH_JUMP, 3'd0);
-        `assert(OUT_MEM_WRITE, 1'b0);
-        `assert(OUT_MEM_READ, 1'b0);
+        `assert(OUT_READ_WRITE, 4'd0);
         `assert(OUT_WB_SEL, 2'b0);
         `assert(OUT_REG_WRITE_EN, 1'b0);
 
@@ -138,8 +132,7 @@ module id_ex_pipeline_reg_tb;
         IN_OP2_SEL = 1'b1;
         IN_ALU_OP = 5'd15;
         IN_BRANCH_JUMP = 3'd2;
-        IN_MEM_WRITE = 1'b1;
-        IN_MEM_READ = 1'b1; 
+        IN_READ_WRITE = 4'd1; 
         IN_WB_SEL = 2'b01;
         IN_REG_WRITE_EN = 1'b0;
 
@@ -158,8 +151,7 @@ module id_ex_pipeline_reg_tb;
             `assert(OUT_OP2_SEL, 1'b1);
             `assert(OUT_ALU_OP, 5'd15);
             `assert(OUT_BRANCH_JUMP, 3'd2);
-            `assert(OUT_MEM_WRITE, 1'b1);
-            `assert(OUT_MEM_READ, 1'b1);
+            `assert(OUT_READ_WRITE, 4'd1);
             `assert(OUT_WB_SEL, 2'b01);
             `assert(OUT_REG_WRITE_EN, 1'b0);
 
@@ -188,8 +180,7 @@ module id_ex_pipeline_reg_tb;
         IN_OP2_SEL = 1'b0;
         IN_ALU_OP = 5'd30;
         IN_BRANCH_JUMP = 3'd3;
-        IN_MEM_WRITE = 1'b0;
-        IN_MEM_READ = 1'b0; 
+        IN_READ_WRITE = 4'd2;
         IN_WB_SEL = 2'b0;
         IN_REG_WRITE_EN = 1'b0;
 
@@ -208,8 +199,7 @@ module id_ex_pipeline_reg_tb;
             `assert(OUT_OP2_SEL, 1'b1);
             `assert(OUT_ALU_OP, 5'd15);
             `assert(OUT_BRANCH_JUMP, 3'd2);
-            `assert(OUT_MEM_WRITE, 1'b1);
-            `assert(OUT_MEM_READ, 1'b1);
+            `assert(OUT_READ_WRITE, 4'd1);
             `assert(OUT_WB_SEL, 2'b01);
             `assert(OUT_REG_WRITE_EN, 1'b0);
 
