@@ -1,6 +1,4 @@
-
-
-module bj_detect_module(BRANCH_JUMP, DATA1, DATA2, PC_SEL);
+module bj_detect(BRANCH_JUMP, DATA1, DATA2, PC_SEL);
     input [2:0] BRANCH_JUMP;
     output PC_SEL;
     input [31:0] DATA1,DATA2;

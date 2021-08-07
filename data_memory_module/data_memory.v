@@ -1,13 +1,5 @@
-module data_memory(
-	CLK,
-    RESET,
-    READ,
-    WRITE,
-    ADDRESS,
-    WRITEDATA,
-    READDATA,
-	BUSYWAIT
-);
+module data_memory(CLK, RESET, READ, WRITE, ADDRESS, WRITEDATA, READDATA, BUSYWAIT);
+
 input				CLK;
 input           	RESET;
 input           	READ;
@@ -28,9 +20,9 @@ integer i;
 //Detecting an incoming memory access
 reg READACCESS, WRITEACCESS;
 
-initial begin
-	$monitor("time: %t bw: %b readaccess: %b", $time, BUSYWAIT, READACCESS);
-end
+// initial begin
+// 	$monitor("time: %t bw: %b readaccess: %b", $time, BUSYWAIT, READACCESS);
+// end
 
 always @(*)
 begin

@@ -2,7 +2,6 @@
     Immediate Generation Module 
 */
 
-`timescale 1ns/100ps
 
 module immediate_generate(IN, OUT, IMM_SEL);
 
