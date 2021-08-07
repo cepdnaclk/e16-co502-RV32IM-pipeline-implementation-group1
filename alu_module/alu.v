@@ -1,3 +1,5 @@
+`include "../utils/encodings.v"
+
 `timescale 1ns/100ps
 
 module alu(DATA1, DATA2, RESULT, SELECT);
@@ -58,24 +60,24 @@ module alu(DATA1, DATA2, RESULT, SELECT);
     always @(*)
     begin
         case(SELECT)
-            5'b00000: RESULT = ADD_RESULT; 
-            5'b00010: RESULT = SUB_RESULT; 
-            5'b00100: RESULT = SLL_RESULT; 
-            5'b01000: RESULT = SLT_RESULT; 
-            5'b01100: RESULT = SLTU_RESULT; 
-            5'b10000: RESULT = XOR_RESULT; 
-            5'b10100: RESULT = SRL_RESULT; 
-            5'b10110: RESULT = SRA_RESULT; 
-            5'b11000: RESULT = OR_RESULT; 
-            5'b11100: RESULT = AND_RESULT; 
-            5'b00001: RESULT = MUL_RESULT; 
-            5'b00101: RESULT = MULH_RESULT[63:32]; 
-            5'b01001: RESULT = MULHU_RESULT; 
-            5'b01101: RESULT = MULHSU_RESULT; 
-            5'b10001: RESULT = DIV_RESULT; 
-            5'b10101: RESULT = DIVU_RESULT; 
-            5'b11001: RESULT = REM_RESULT; 
-            5'b11101: RESULT = REMU_RESULT; 
+            `ADD: RESULT = ADD_RESULT; 
+            `SUB: RESULT = SUB_RESULT; 
+            `SLL: RESULT = SLL_RESULT; 
+            `SLT: RESULT = SLT_RESULT; 
+            `SLTU: RESULT = SLTU_RESULT; 
+            `XOR: RESULT = XOR_RESULT; 
+            `SRL: RESULT = SRL_RESULT; 
+            `SRA: RESULT = SRA_RESULT; 
+            `OR: RESULT = OR_RESULT; 
+            `AND: RESULT = AND_RESULT; 
+            `MUL: RESULT = MUL_RESULT; 
+            `MULH: RESULT = MULH_RESULT[63:32]; 
+            `MULHSU: RESULT = MULHU_RESULT; 
+            `MULHU: RESULT = MULHSU_RESULT; 
+            `DIV: RESULT = DIV_RESULT; 
+            `DIVU: RESULT = DIVU_RESULT; 
+            `REM : RESULT = REM_RESULT; 
+            `REMU: RESULT = REMU_RESULT; 
                 
             default:  RESULT = 0 ;  
                                 
