@@ -1,7 +1,7 @@
 /*
     Immediate Generation Module 
 */
-
+`include "../utils/encodings.v"
 `timescale 1ns/100ps
 
 module immediate_generate(IN, OUT, IMM_SEL);
@@ -59,13 +59,13 @@ module immediate_generate(IN, OUT, IMM_SEL);
     begin
       
         case(IMM_SEL)
-            3'b000: OUT = U_OUT;
-            3'b001: OUT = J_OUT;
-            3'b010: OUT = S_OUT;
-            3'b011: OUT = B_OUT;     
-            3'b100: OUT = I_SIGN_OUT;          
-            3'b101: OUT = I_SHIFT_OUT;         
-            3'b110: OUT = I_UNSIGN_OUT;           
+            `U_TYPE: OUT = U_OUT;
+            `J_TYPE: OUT = J_OUT;
+            `S_TYPE: OUT = S_OUT;
+            `B_TYPE: OUT = B_OUT;     
+            `I_SIGNED_TYPE: OUT = I_SIGN_OUT;          
+            `I_SHIFT_TYPE: OUT = I_SHIFT_OUT;         
+            `I_UNSIGNED_TYPE: OUT = I_UNSIGN_OUT;           
             default: OUT = 0 ;  
                                 
         endcase
