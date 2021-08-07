@@ -49,10 +49,10 @@ module ex_mem_pipeline_reg(
     //RESETTING output registers
     //TODO: set proper values in RESET operation -> change the RESET test in the testbench
     always @ (*) begin
-        #2
+        #1
         if (RESET) begin
             OUT_INSTRUCTION = 5'd0;
-            OUT_PC = -32'd4;
+            OUT_PC = 32'd0;
             OUT_ALU_RESULT = 32'd0;
             OUT_DATA2 = 32'd0;
             OUT_IMMEDIATE =  32'd0;
