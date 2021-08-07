@@ -1,7 +1,6 @@
-ADD x1 x2 x30
-jalr x1 x2 60
-lw x1 60(x2)
-sw x1 60(x3)
-slli x1 x2 3
-bge x1 x2 6
-auipc x1 3
+addi x1 x0 10
+addi x2 x0 5
+add x3 x1 x2
+sub x4 x3 x2
+sw x4 0(x0)
+lw x5 0(x0)

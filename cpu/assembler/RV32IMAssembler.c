@@ -13,7 +13,7 @@ Description :
 
 #define LINE_SIZE 512
 
-// #define DEBUG 1
+#define DEBUG 1
 #ifdef DEBUG
 #define PRINT printf 
 #else 
@@ -79,6 +79,16 @@ char* opcodeFromKeyword(char* keyword) {
         strcasecmp(keyword, "ecall") == 0 ||
         strcasecmp(keyword, "ebreak") == 0 
     ) return "1110011";
+    if(
+        strcasecmp(keyword, "mul") == 0 ||
+        strcasecmp(keyword, "mulh") == 0 ||
+        strcasecmp(keyword, "mulhsu") == 0 ||
+        strcasecmp(keyword, "mulhu") == 0 ||
+        strcasecmp(keyword, "div") == 0 ||
+        strcasecmp(keyword, "divu") == 0 ||
+        strcasecmp(keyword, "rem") == 0 ||
+        strcasecmp(keyword, "remu") == 0
+    ) return "0110011";
     return "0000000";
 }
 
@@ -175,6 +185,11 @@ char* getFunc7(char* instruction, char* type) {
         if(strcasecmp(instruction, "or") == 0) return "0000000";
         if(strcasecmp(instruction, "and") == 0) return "0000000";
     }
+    if(strcmp(type, "SFT_TYPE") == 0) {
+        if(strcasecmp(instruction, "slli") == 0) return "0000000";
+        if(strcasecmp(instruction, "srli") == 0) return "0000000";
+        if(strcasecmp(instruction, "srai") == 0) return "0100000";
+    }
     return "0000000";
 }
 
@@ -183,8 +198,8 @@ char* getFunc3(char* instruction, char* type) {
     if(strcmp(type,"R_TYPE") == 0) {
         if(strcasecmp(instruction, "mul") == 0) return "000";
         if(strcasecmp(instruction, "mulh") == 0) return "001";
-        if(strcasecmp(instruction, "mulhu") == 0) return "010";
-        if(strcasecmp(instruction, "mulhsu") == 0) return "011";
+        if(strcasecmp(instruction, "mulhsu") == 0) return "010";
+        if(strcasecmp(instruction, "mulhu") == 0) return "011";
         if(strcasecmp(instruction, "div") == 0) return "100";
         if(strcasecmp(instruction, "divu") == 0) return "101";
         if(strcasecmp(instruction, "rem") == 0) return "110";
@@ -205,21 +220,22 @@ char* getFunc3(char* instruction, char* type) {
         if(strcasecmp(instruction, "lh") == 0) return "001";
         if(strcasecmp(instruction, "lw") == 0) return "010";
         if(strcasecmp(instruction, "lbu") == 0) return "100";
-        if(strcasecmp(instruction, "addi") == 0) return "101";
-        if(strcasecmp(instruction, "andi") == 0) return "000";
+        if(strcasecmp(instruction, "lhu") == 0) return "101";
+        if(strcasecmp(instruction, "addi") == 0) return "000";
         if(strcasecmp(instruction, "slti") == 0) return "010";
         if(strcasecmp(instruction, "sltiu") == 0) return "011";
         if(strcasecmp(instruction, "xori") == 0) return "100";
         if(strcasecmp(instruction, "ori") == 0) return "110";
+        if(strcasecmp(instruction, "andi") == 0) return "111";
         if(strcasecmp(instruction, "jalr") == 0) return "000";
     }
     if(strcmp(type,"B_TYPE") == 0) {
-        if(strcasecmp(instruction, "beq") == 0) return "001";
-        if(strcasecmp(instruction, "bne") == 0) return "010";
-        if(strcasecmp(instruction, "blt") == 0) return "011";
-        if(strcasecmp(instruction, "bge") == 0) return "100";
-        if(strcasecmp(instruction, "bltu") == 0) return "101";
-        if(strcasecmp(instruction, "bgeu") == 0) return "110";
+        if(strcasecmp(instruction, "beq") == 0) return "000";
+        if(strcasecmp(instruction, "bne") == 0) return "001";
+        if(strcasecmp(instruction, "blt") == 0) return "100";
+        if(strcasecmp(instruction, "bge") == 0) return "101";
+        if(strcasecmp(instruction, "bltu") == 0) return "110";
+        if(strcasecmp(instruction, "bgeu") == 0) return "111";
     }
     if(strcmp(type,"J_TYPE") == 0)  {
         if(strcasecmp(instruction, "jal") == 0) return "000";
@@ -227,6 +243,11 @@ char* getFunc3(char* instruction, char* type) {
     if(strcmp(type, "U_TYPE") == 0) {
         if(strcasecmp(instruction, "lui") == 0) return "000";
         if(strcasecmp(instruction, "auipc") == 0) return "000";
+    }
+    if(strcmp(type, "SFT_TYPE") == 0) {
+        if(strcasecmp(instruction, "slli") == 0) return "001";
+        if(strcasecmp(instruction, "srli") == 0) return "101";
+        if(strcasecmp(instruction, "srai") == 0) return "101";
     }
     if(strcmp(type, "S_TYPE") == 0) {
         if(strcasecmp(instruction, "sb") == 0) return "000";
@@ -263,8 +284,16 @@ int encodeToFormat(FILE* fo,char* keyword, char* type, char* destination_registe
     } else if (strcmp(type, "I_TYPE") == 0) {
         char imm11_0[13]="";
         strncpy(imm11_0, immediateRef+(31 - 11), 12);
-        if(strcasecmp(keyword, "jalr") == 0) strcpy(base_register, src1_register);
-        sprintf(pline, "%.12s %.5s %.3s %.5s %.7s", imm11_0, base_register, func3, destination_register, opcode);
+        if(
+            strcasecmp(keyword, "lb") == 0 || 
+            strcasecmp(keyword, "lh") == 0 ||
+            strcasecmp(keyword, "lw") == 0 ||
+            strcasecmp(keyword, "lbu") == 0 ||
+            strcasecmp(keyword, "lhu") == 0 ) {
+                sprintf(pline, "%.12s %.5s %.3s %.5s %.7s", imm11_0, base_register, func3, destination_register, opcode);
+            }else {
+                sprintf(pline, "%.12s %.5s %.3s %.5s %.7s", imm11_0, src1_register, func3, destination_register, opcode);
+            }
     } else if (strcmp(type, "S_TYPE") == 0) {
         char imm11_5[8] = "";
         char imm4_0[6] = "";
@@ -280,7 +309,7 @@ int encodeToFormat(FILE* fo,char* keyword, char* type, char* destination_registe
         char imm4_1[5] = "";
         strncpy(imm10_5, immediateRef+(31 - 10), 6);
         strncpy(imm4_1, immediateRef+(31 - 4), 4);
-        sprintf(pline, "%c %.6s %.5s %.5s %.3s %.4s %c %.7s",immediateRef[31-12], imm10_5, src2_register, src1_register, func3, imm4_1, immediateRef[31-11], opcode);
+        sprintf(pline, "%c %.6s %.5s %.5s %.3s %.4s %c %.7s",immediateRef[31-12], imm10_5, src1_register, destination_register, func3, imm4_1, immediateRef[31-11], opcode);
     } else if (strcmp(type, "U_TYPE") == 0) {
         char imm31_12[21] = "";
         strncpy(imm31_12, immediateRef, 20);
@@ -294,19 +323,24 @@ int encodeToFormat(FILE* fo,char* keyword, char* type, char* destination_registe
 int operandCountChecker(char* type, char* keyword) {
     if(strcmp(type, "R_TYPE") == 0 || strcmp(type, "SFT_TYPE") == 0 || strcmp(type, "B_TYPE") == 0) return 4;
     if(strcmp(type, "J_TYPE") == 0 || strcmp(type, "U_TYPE") == 0) return 3;
-    if(strcmp(type, "I_TYPE") == 0 || strcmp(type, "S_TYPE") == 0) {
-        if(strcasecmp(keyword, "jalr") == 0 ) return 4;
-        return 3;
-    };
+    if(strcmp(type, "S_TYPE") == 0) return 3;
+    if(strcmp(type, "I_TYPE") == 0) return 4;
     return 0;
 }
 
 char* operandOrderChecker(char* type, char* keyword) {
     if(strcmp(type, "R_TYPE") == 0) return "operand_operand_operand";
     if(strcmp(type, "J_TYPE") == 0 || strcmp(type, "U_TYPE") == 0) return "operand_offset";
-    if(strcmp(type, "I_TYPE") == 0 || strcmp(type, "S_TYPE") == 0) {
-        if(strcasecmp(keyword, "jalr") == 0 ) return "operand_operand_offset";
-        return "operand_base-and-offset";
+    if(strcmp(type, "S_TYPE") == 0) return "operand_base-and-offset";
+    if(strcmp(type, "I_TYPE") == 0) {
+        if(
+            strcasecmp(keyword, "lw") == 0 ||
+            strcasecmp(keyword, "lh") == 0 ||
+            strcasecmp(keyword, "lbu") == 0 ||
+            strcasecmp(keyword, "lhu") == 0
+        ) return "operand_base-and-offset";
+
+        return "operand_operand_offset";
     }
     if(strcmp(type, "SFT_TYPE") == 0 || strcmp(type, "B_TYPE") == 0) return "operand_operand_offset";
     return "";
@@ -346,7 +380,6 @@ int main(int argc, char *argv[]) {
             continue;
         }
         
-        char pline[LINE_SIZE]="";
 		char tline[LINE_SIZE];
         char operandOrder[LINE_SIZE]="";
         char keyword[10]="";
@@ -446,31 +479,33 @@ int main(int argc, char *argv[]) {
                     base_register[5] = '\0';
                 }else {
                     strcat(operandOrder, OFFSET);
-                    int immediateValue = 0;
-                    int length = strlen(in_token);
-                    for (int i = 0; i < length; i++){
-                        if(in_token[i] == '\n') continue;
-                        if(isdigit(in_token[i])) {
-                            immediateValue = immediateValue*10 + (in_token[i] - '0');
-                        }
-                    }
-
-                    strcpy(immediate, "");
-                    for (int i = 31; i >= 0; i--){
-                        int digit = immediateValue >> i;
-                        if(digit & 1) {
-                            immediate[31 - i] = '1';
-                        }else {
-                            immediate[31 - i] = '0';
-                        }
-                    }
-                    immediate[32] = '\0';
                 }
+                int immediateValue = 0;
+                int length = strlen(in_token);
+                for (int i = 0; i < length; i++){
+                    if(in_token[i] == '(') break;
+                    if(in_token[i] == '\n') continue;
+                    if(isdigit(in_token[i])) {
+                        immediateValue = immediateValue*10 + (in_token[i] - '0');
+                    }
+                }
+
+                strcpy(immediate, "");
+                for (int i = 31; i >= 0; i--){
+                    int digit = immediateValue >> i;
+                    if(digit & 1) {
+                        immediate[31 - i] = '1';
+                    }else {
+                        immediate[31 - i] = '0';
+                    }
+                }
+                immediate[32] = '\0';
            }
            
            in_token = strtok(NULL,delim);
            count ++;
         }
+        PRINT("Operand order for %s %s instruction :%s\n", type, keyword, operandOrder);
         if(strcmp(operandOrder, operandOrderChecker(type, keyword))) errorHandler("Invalid operand order", out_file, lineNumber, argv[1]);
         encodeToFormat(fo, keyword, type, destination_register, src1_register, src2_register, immediate, base_register);
     }
