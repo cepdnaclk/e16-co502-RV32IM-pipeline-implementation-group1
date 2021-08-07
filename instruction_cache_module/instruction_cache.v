@@ -1,14 +1,4 @@
-module instruction_cache(
-    CLK,
-    RESET,
-    ADDRESS,
-    READDATA,
-    BUSYWAIT,
-    MEM_ADDRESS,
-    MEM_READ,
-    MEM_READDATA,
-    MEM_BUSYWAIT
-);
+module instruction_cache(CLK, RESET, ADDRESS, READDATA, BUSYWAIT, MEM_ADDRESS, MEM_READ, MEM_READDATA, MEM_BUSYWAIT);
 
 //Declare ports
 input [31:0] ADDRESS;

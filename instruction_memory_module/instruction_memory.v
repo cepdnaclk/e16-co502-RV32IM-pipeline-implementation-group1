@@ -1,10 +1,4 @@
-module instruction_memory(
-    CLK,
-    READ,
-    ADDRESS,
-    READDATA,
-    BUSYWAIT
-);
+module instruction_memory(CLK, READ, ADDRESS, READDATA, BUSYWAIT);
 
 `define MEM_READ_DELAY #10
 
