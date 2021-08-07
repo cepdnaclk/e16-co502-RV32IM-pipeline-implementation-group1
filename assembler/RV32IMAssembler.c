@@ -13,7 +13,7 @@ Description :
 
 #define LINE_SIZE 512
 
-// #define DEBUG 1
+#define DEBUG 1
 #ifdef DEBUG
 #define PRINT printf 
 #else 
@@ -175,6 +175,11 @@ char* getFunc7(char* instruction, char* type) {
         if(strcasecmp(instruction, "or") == 0) return "0000000";
         if(strcasecmp(instruction, "and") == 0) return "0000000";
     }
+    if(strcmp(type, "SFT_TYPE") == 0) {
+        if(strcasecmp(instruction, "slli") == 0) return "0000000";
+        if(strcasecmp(instruction, "srli") == 0) return "0000000";
+        if(strcasecmp(instruction, "srai") == 0) return "0100000";
+    }
     return "0000000";
 }
 
@@ -183,8 +188,8 @@ char* getFunc3(char* instruction, char* type) {
     if(strcmp(type,"R_TYPE") == 0) {
         if(strcasecmp(instruction, "mul") == 0) return "000";
         if(strcasecmp(instruction, "mulh") == 0) return "001";
-        if(strcasecmp(instruction, "mulhu") == 0) return "010";
-        if(strcasecmp(instruction, "mulhsu") == 0) return "011";
+        if(strcasecmp(instruction, "mulhsu") == 0) return "010";
+        if(strcasecmp(instruction, "mulhu") == 0) return "011";
         if(strcasecmp(instruction, "div") == 0) return "100";
         if(strcasecmp(instruction, "divu") == 0) return "101";
         if(strcasecmp(instruction, "rem") == 0) return "110";
@@ -205,21 +210,22 @@ char* getFunc3(char* instruction, char* type) {
         if(strcasecmp(instruction, "lh") == 0) return "001";
         if(strcasecmp(instruction, "lw") == 0) return "010";
         if(strcasecmp(instruction, "lbu") == 0) return "100";
-        if(strcasecmp(instruction, "addi") == 0) return "101";
-        if(strcasecmp(instruction, "andi") == 0) return "000";
+        if(strcasecmp(instruction, "lhu") == 0) return "101";
+        if(strcasecmp(instruction, "addi") == 0) return "000";
         if(strcasecmp(instruction, "slti") == 0) return "010";
         if(strcasecmp(instruction, "sltiu") == 0) return "011";
         if(strcasecmp(instruction, "xori") == 0) return "100";
         if(strcasecmp(instruction, "ori") == 0) return "110";
+        if(strcasecmp(instruction, "andi") == 0) return "111";
         if(strcasecmp(instruction, "jalr") == 0) return "000";
     }
     if(strcmp(type,"B_TYPE") == 0) {
-        if(strcasecmp(instruction, "beq") == 0) return "001";
-        if(strcasecmp(instruction, "bne") == 0) return "010";
-        if(strcasecmp(instruction, "blt") == 0) return "011";
-        if(strcasecmp(instruction, "bge") == 0) return "100";
-        if(strcasecmp(instruction, "bltu") == 0) return "101";
-        if(strcasecmp(instruction, "bgeu") == 0) return "110";
+        if(strcasecmp(instruction, "beq") == 0) return "000";
+        if(strcasecmp(instruction, "bne") == 0) return "001";
+        if(strcasecmp(instruction, "blt") == 0) return "100";
+        if(strcasecmp(instruction, "bge") == 0) return "101";
+        if(strcasecmp(instruction, "bltu") == 0) return "110";
+        if(strcasecmp(instruction, "bgeu") == 0) return "111";
     }
     if(strcmp(type,"J_TYPE") == 0)  {
         if(strcasecmp(instruction, "jal") == 0) return "000";
@@ -227,6 +233,11 @@ char* getFunc3(char* instruction, char* type) {
     if(strcmp(type, "U_TYPE") == 0) {
         if(strcasecmp(instruction, "lui") == 0) return "000";
         if(strcasecmp(instruction, "auipc") == 0) return "000";
+    }
+    if(strcmp(type, "SFT_TYPE") == 0) {
+        if(strcasecmp(instruction, "slli") == 0) return "001";
+        if(strcasecmp(instruction, "srli") == 0) return "101";
+        if(strcasecmp(instruction, "srai") == 0) return "101";
     }
     if(strcmp(type, "S_TYPE") == 0) {
         if(strcasecmp(instruction, "sb") == 0) return "000";
@@ -280,7 +291,7 @@ int encodeToFormat(FILE* fo,char* keyword, char* type, char* destination_registe
         char imm4_1[5] = "";
         strncpy(imm10_5, immediateRef+(31 - 10), 6);
         strncpy(imm4_1, immediateRef+(31 - 4), 4);
-        sprintf(pline, "%c %.6s %.5s %.5s %.3s %.4s %c %.7s",immediateRef[31-12], imm10_5, src2_register, src1_register, func3, imm4_1, immediateRef[31-11], opcode);
+        sprintf(pline, "%c %.6s %.5s %.5s %.3s %.4s %c %.7s",immediateRef[31-12], imm10_5, src1_register, destination_register, func3, imm4_1, immediateRef[31-11], opcode);
     } else if (strcmp(type, "U_TYPE") == 0) {
         char imm31_12[21] = "";
         strncpy(imm31_12, immediateRef, 20);
