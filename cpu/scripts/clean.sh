@@ -13,4 +13,11 @@ rm -f **/*.vcd
 echo "deleting all .vvp files"
 rm -f **/*.vvp
 
+echo "deleteing all .out files"
+rm -f **/*.out
+
+echo "deleteing all .machine files"
+
+rm -f *.machine
+
 echo "project folder cleaned!"

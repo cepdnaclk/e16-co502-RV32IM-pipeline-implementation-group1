@@ -11,23 +11,14 @@ output reg          BUSYWAIT;
 reg READACCESS;
 
 //Declare memory array 1024x8-bits 
-reg [7:0] MEM_ARRAY [1023:0];
+reg [7:0] MEM_ARRAY [0:1023];
 
 // //Initialize instruction memory
-initial
-begin
-    BUSYWAIT = 0;
-    READACCESS = 0;
-
-//     // Sample program given below. You may hardcode your software program here, or load it from a file:
-    {MEM_ARRAY[10'd3],  MEM_ARRAY[10'd2],  MEM_ARRAY[10'd1],  MEM_ARRAY[10'd0]}  = 32'b00000001111000010000000010110011; // loadi 0 0x01
-//     {MEM_ARRAY[10'd7],  MEM_ARRAY[10'd6],  MEM_ARRAY[10'd5],  MEM_ARRAY[10'd4]}  = 32'b00000000000000010000000000000000; // loadi 1 0x00
-//     {MEM_ARRAY[10'd11], MEM_ARRAY[10'd10], MEM_ARRAY[10'd9],  MEM_ARRAY[10'd8]}  = 32'b00000000000000100000000000000010; // loadi 2 0x02
-//     {MEM_ARRAY[10'd15], MEM_ARRAY[10'd14], MEM_ARRAY[10'd13], MEM_ARRAY[10'd12]} = 32'b00000010000000010000000100000000; // add 1 1 0
-//     {MEM_ARRAY[10'd19], MEM_ARRAY[10'd18], MEM_ARRAY[10'd17], MEM_ARRAY[10'd16]} = 32'b00001011000000000000000100000000; // swi 1 0x00
-//     {MEM_ARRAY[10'd23], MEM_ARRAY[10'd22], MEM_ARRAY[10'd21], MEM_ARRAY[10'd20]} = 32'b00001100111111010000000100000010; // bne 0xFD 1 2
-//     {MEM_ARRAY[10'd27], MEM_ARRAY[10'd26], MEM_ARRAY[10'd25], MEM_ARRAY[10'd24]} = 32'b00000000000000110000000000000101; // loadi 3 0x05
-end
+// initial
+// begin
+//     BUSYWAIT = 0;
+//     READACCESS = 0;
+// end
 
 //Detecting an incoming memory access
 always @(READ)

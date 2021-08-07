@@ -16,6 +16,7 @@ data_memory d_mem(CLK, RESET, DATA_MEM_READ, DATA_MEM_WRITE, DATA_MEM_ADDRESS, D
 instruction_memory inst_mem(CLK, INST_MEM_READ, INST_MEM_ADDRESS, INST_MEM_READDATA, INST_MEM_BUSYWAIT);
 
 initial begin
+    $readmemb("../instruction_memory_module/instr_mem.mem", inst_mem.MEM_ARRAY);
     $dumpfile("cpu_single_cycle_wavedata.vcd");
     $dumpvars(0, cpu_single_cycle_tb);
     
