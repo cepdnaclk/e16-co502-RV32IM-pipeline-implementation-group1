@@ -17,14 +17,6 @@
 `define DATA2 1'b0
 `define IMM 1'b1
 
-// MEM_WRITE
-`define MEM_WRITE_0 1'b0
-`define MEM_WRITE_1 1'b1
-
-// MEM_READ
-`define MEM_READ_0 1'b0
-`define MEM_READ_1 1'b1
-
 // REG_WRITE_EN
 `define REG_WRITE_EN_0 1'b0
 `define REG_WRITE_EN_1 1'b1
@@ -73,3 +65,14 @@
 `define I_SIGNED_TYPE 3'b100
 `define I_SHIFT_TYPE 3'b101
 `define I_UNSIGNED_TYPE 3'b111
+
+// MEM_RW
+`define NO_RW 4'b0000
+`define LB 4'b1000
+`define LH 4'b1001
+`define LW 4'b1010
+`define LBU 4'b1100
+`define LHU 4'b1101
+`define SB 4'b1011
+`define SH 4'b1110
+`define SW 4'b1111
