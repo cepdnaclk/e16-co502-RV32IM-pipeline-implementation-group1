@@ -43,4 +43,4 @@ cd ../scripts
 
 cd ../cpu_single_cycle
 
-gtkwave cpu_single_cycle_wavedata.vcd
+# gtkwave cpu_single_cycle_wavedata.vcd

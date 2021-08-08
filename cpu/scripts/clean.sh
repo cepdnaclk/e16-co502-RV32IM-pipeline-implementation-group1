@@ -17,7 +17,9 @@ echo "deleteing all .out files"
 rm -f **/*.out
 
 echo "deleteing all .machine files"
-
 rm -f *.machine
+
+echo "deleteing all .mem files"
+rm -f **/*.mem
 
 echo "project folder cleaned!"
