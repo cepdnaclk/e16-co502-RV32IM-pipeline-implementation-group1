@@ -62,7 +62,6 @@ module mem_wb_pipeline_reg(
     begin
         #0
         if (!RESET & !BUSYWAIT) begin
-            $display("imthere");
             OUT_INSTRUCTION <= #1 IN_INSTRUCTION;
             OUT_PC_4 <= #1 IN_PC_4;
             OUT_ALU_RESULT <= #1 IN_ALU_RESULT;
