@@ -66,7 +66,7 @@ module ex_mem_pipeline_reg(
     //when the RESET is low and when the CLOCK is at a positive edge and BUSYWAIT is low 
     always @(posedge CLK)
     begin
-        #2
+        #1
         if (!RESET & !BUSYWAIT) begin
             OUT_INSTRUCTION = IN_INSTRUCTION;
             OUT_PC = IN_PC;

@@ -20,10 +20,6 @@ integer i;
 //Detecting an incoming memory access
 reg READACCESS, WRITEACCESS;
 
-// initial begin
-// 	$monitor("time: %t bw: %b readaccess: %b", $time, BUSYWAIT, READACCESS);
-// end
-
 always @(*)
 begin
 
@@ -35,7 +31,6 @@ end
 //Reading & writing
 always @(posedge CLK)
 begin
-	$display("time: %t readaccess: %d", $time, READACCESS);
 	if(READACCESS)
 	begin
 		READDATA[7:0]       = `READ_WRITE_DELAY MEM_ARRAY[{ADDRESS,4'b0000}];
