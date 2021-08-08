@@ -31,7 +31,7 @@ initial begin
 
     CLK = 1'b0;
     RESET = 1'b0;
-    #1;
+    #3;
     RESET = 1'b1;
     #1;
     RESET = 1'b0;
