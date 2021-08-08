@@ -39,8 +39,8 @@ echo ""
 
 cd ../scripts
 
-./test-cpu-single-cycle.sh
+./test-cpu-pipeline.sh
 
-cd ../cpu_single_cycle
+cd ../cpu_pipeline
 
-# gtkwave cpu_single_cycle_wavedata.vcd
+# gtkwave cpu_pipeline_wavedata.vcd
