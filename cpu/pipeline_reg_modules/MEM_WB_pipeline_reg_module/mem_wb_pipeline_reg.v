@@ -44,8 +44,8 @@ module mem_wb_pipeline_reg(
     //RESETTING output registers
     //TODO: set proper values in RESET operation -> change the RESET test in the testbench
     always @ (*) begin
-        #1
         if (RESET) begin
+            #1;
             OUT_INSTRUCTION = 5'd0;
             OUT_PC_4 = 32'd0;
             OUT_ALU_RESULT = 32'd0;
@@ -60,15 +60,16 @@ module mem_wb_pipeline_reg(
     //when the RESET is low and when the CLOCK is at a positive edge and BUSYWAIT is low 
     always @(posedge CLK)
     begin
-        #1
+        #0
         if (!RESET & !BUSYWAIT) begin
-            OUT_INSTRUCTION = IN_INSTRUCTION;
-            OUT_PC_4 = IN_PC_4;
-            OUT_ALU_RESULT = IN_ALU_RESULT;
-            OUT_IMMEDIATE =  IN_IMMEDIATE;
-            OUT_DMEM_OUT = IN_DMEM_OUT;
-            OUT_WB_SEL = IN_WB_SEL;
-            OUT_REG_WRITE_EN = IN_REG_WRITE_EN;
+            $display("imthere");
+            OUT_INSTRUCTION <= #1 IN_INSTRUCTION;
+            OUT_PC_4 <= #1 IN_PC_4;
+            OUT_ALU_RESULT <= #1 IN_ALU_RESULT;
+            OUT_IMMEDIATE <= #1  IN_IMMEDIATE;
+            OUT_DMEM_OUT <= #1 IN_DMEM_OUT;
+            OUT_WB_SEL <= #1 IN_WB_SEL;
+            OUT_REG_WRITE_EN <= #1 IN_REG_WRITE_EN;
         end
     end
 

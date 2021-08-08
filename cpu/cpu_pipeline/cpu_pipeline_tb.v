@@ -31,7 +31,7 @@ initial begin
 
     CLK = 1'b0;
     RESET = 1'b0;
-    #3;
+    #1;
     RESET = 1'b1;
     #1;
     RESET = 1'b0;
@@ -43,7 +43,7 @@ end
 
 // clock genaration.
 always begin
-    #2 CLK = ~CLK;
+    #4 CLK = ~CLK;
 end
 
 endmodule
