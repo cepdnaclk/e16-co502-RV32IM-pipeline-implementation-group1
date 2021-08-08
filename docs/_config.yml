@@ -1,13 +1,9 @@
-# This theme is based on https://github.com/jekyll/minima
-# Please refer above link to know the available configurations
+remote_theme: pmarsceill/just-the-docs
 
-title: ""
-remote_theme: cepdnaclk/eYY-project-theme
-description: ""
-markdown: kramdown
+# Aux links for the upper right navigation
+aux_links:
+  "GitHub Repository":
+    - "//github.com/cepdnaclk/e16-co502-RV32IM-pipeline-implementation-group1"
 
-kramdown:
-  parse_block_html: true
-  syntax_highlighter_opts:
-    block:
-      line_numbers: false
+# Makes Aux links open in a new tab. Default is false
+aux_links_new_tab: false
