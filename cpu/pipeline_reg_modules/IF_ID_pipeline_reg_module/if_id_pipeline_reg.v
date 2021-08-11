@@ -15,8 +15,8 @@ module if_id_pipeline_reg(
     //RESETTING output registers
     //TODO: set proper values in RESET operation -> change the RESET test in the testbench
     always @ (*) begin
-        #1
         if (RESET) begin
+            #1;
             OUT_PC = 32'd0;
             OUT_INSTRUCTION = 32'd0;
         end
@@ -26,10 +26,10 @@ module if_id_pipeline_reg(
     //when the RESET is low and when the CLOCK is at a positive edge and BUSYWAIT is low 
     always @(posedge CLK)
     begin
-        #1
+        #0
         if (!RESET & !BUSYWAIT) begin
-            OUT_PC = IN_PC;
-            OUT_INSTRUCTION = IN_INSTRUCTION;
+            OUT_PC <= #1 IN_PC;
+            OUT_INSTRUCTION <= #1 IN_INSTRUCTION;
         end
     end
 
