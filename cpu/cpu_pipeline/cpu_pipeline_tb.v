@@ -31,19 +31,18 @@ initial begin
 
     CLK = 1'b0;
     RESET = 1'b0;
-    #1;
     RESET = 1'b1;
     #1;
     RESET = 1'b0;
     
-    #500;
+    #1000;
     $finish;
     
 end
 
 // clock genaration.
 always begin
-    #4 CLK = ~CLK;
+    #2 CLK = ~CLK;
 end
 
 endmodule
