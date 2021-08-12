@@ -99,7 +99,7 @@ module id_ex_pipeline_reg_tb;
         RESET = 1'b0;
 
         `assert(OUT_INSTRUCTION, 5'd0);
-        `assert(OUT_PC, -32'd4);
+        `assert(OUT_PC, 32'd0);
         `assert(OUT_DATA1, 32'd0);
         `assert(OUT_DATA2, 32'd0);
         `assert(OUT_IMMEDIATE, 32'd0);
