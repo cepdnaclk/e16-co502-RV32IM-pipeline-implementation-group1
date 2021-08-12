@@ -30,7 +30,7 @@ module immediate_generate_tb;
         IN = 25'b1_0001101110_1_01001110_01010;
         IMM_SEL = `J_TYPE;
         #1
-        `assert(OUT, 32'b111111111111_01001110_1_0001101110_0);
+        `assert(OUT, 32'b11111111111_01001110_1_0001101110_00);
         $display("J Test Passed !");
 
         #5
@@ -47,7 +47,7 @@ module immediate_generate_tb;
         IN = 25'b1_010000_11011_10101_110_0101_0;
         IMM_SEL = `B_TYPE;
         #1
-        `assert(OUT, 32'b11111111111111111111_0_010000_0101_0);
+        `assert(OUT, 32'b1111111111111111111_0_010000_0101_00);
         $display("B Test Passed !");
 
         #5
