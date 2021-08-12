@@ -1,6 +1,6 @@
 module instruction_memory(CLK, READ, ADDRESS, READDATA, BUSYWAIT);
 
-`define MEM_READ_DELAY #2
+`define MEM_READ_DELAY #40
 
 input               CLK;
 input               READ;
