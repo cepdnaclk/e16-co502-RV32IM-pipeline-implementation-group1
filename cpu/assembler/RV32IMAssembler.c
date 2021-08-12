@@ -639,7 +639,9 @@ int main(int argc, char *argv[])
                 {
                     strcat(operandOrder, OFFSET);
                 }
+
                 int immediateValue = 0;
+                int isSignedImmediate = 0;
                 int length = strlen(in_token);
                 for (int i = 0; i < length; i++)
                 {
@@ -647,12 +649,16 @@ int main(int argc, char *argv[])
                         break;
                     if (in_token[i] == '\n')
                         continue;
+                    if (in_token[i] == '-') {
+                        isSignedImmediate = 1;
+                        continue;
+                    }
                     if (isdigit(in_token[i]))
                     {
                         immediateValue = immediateValue * 10 + (in_token[i] - '0');
                     }
                 }
-
+                if(isSignedImmediate) immediateValue = immediateValue * -1;
                 strcpy(immediate, "");
                 for (int i = 31; i >= 0; i--)
                 {
@@ -668,7 +674,6 @@ int main(int argc, char *argv[])
                 }
                 immediate[32] = '\0';
             }
-
             in_token = strtok(NULL, delim);
             count++;
         }
