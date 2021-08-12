@@ -1,8 +1,12 @@
 addi x1 x0 10
-ori x2 x0 20
-addi x3 x0 10
-ori x4 x0 20
-sll x5 x1 x2
-sw x4 0(x0)
-add x2 x2 x1
+addi x2 x0 5
+nop
+nop
+nop
+add x3 x1 x2
+sub x4 x1 x2
+nop
+nop
+sw x3 0(x0)
+sw x4 4(x0)
 lw x5 0(x0)
