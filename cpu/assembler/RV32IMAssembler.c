@@ -138,8 +138,8 @@ char *getInstructionType(char *keyword)
         strcasecmp(keyword, "andi") == 0 ||
         strcasecmp(keyword, "jalr") == 0 ||
         strcasecmp(keyword, "nop") == 0 ||
-        strcasecmp(keyword, "nop\n") == 0
-    ) return "I_TYPE";
+        strcasecmp(keyword, "nop\n") == 0)
+        return "I_TYPE";
 
     if (
         strcasecmp(keyword, "sb") == 0 ||
@@ -269,7 +269,7 @@ char *getFunc3(char *instruction, char *type)
             return "110";
         if (strcasecmp(instruction, "and") == 0)
             return "111";
-        if (strcasecmp(instruction, "nop") == 0 || strcasecmp(instruction, "nop\n") == 0 )
+        if (strcasecmp(instruction, "nop") == 0 || strcasecmp(instruction, "nop\n") == 0)
             return "000";
     }
     if (strcmp(type, "I_TYPE") == 0)
@@ -392,11 +392,13 @@ int encodeToFormat(FILE *fo, char *keyword, char *type, char *destination_regist
             strcasecmp(keyword, "lhu") == 0)
         {
             sprintf(pline, "%.12s%.5s%.3s%.5s%.7s", imm11_0, base_register, func3, destination_register, opcode);
-        } else if(strcasecmp(keyword, "nop") == 0 || strcasecmp(keyword, "nop\n") == 0) {
+        }
+        else if (strcasecmp(keyword, "nop") == 0 || strcasecmp(keyword, "nop\n") == 0)
+        {
             sprintf(pline, "%.12s%.5s%.3s%.5s%.7s", "0000000000000000", "00000", func3, "00000", opcode);
         }
         else
-        {   
+        {
             sprintf(pline, "%.12s%.5s%.3s%.5s%.7s", imm11_0, src1_register, func3, destination_register, opcode);
         }
     }
@@ -416,11 +418,15 @@ int encodeToFormat(FILE *fo, char *keyword, char *type, char *destination_regist
     }
     else if (strcmp(type, "B_TYPE") == 0)
     {
+        char b_immediate[13] = "";
+        char b_imm10_0[12] = "";
+        strncpy(b_imm10_0, immediateRef + (31 - 10), 11);
+        sprintf(b_immediate, "%c%.11s", immediateRef[0], b_imm10_0);
         char imm10_5[7] = "";
         char imm4_1[5] = "";
-        strncpy(imm10_5, immediateRef + (31 - 10), 6);
-        strncpy(imm4_1, immediateRef + (31 - 4), 4);
-        sprintf(pline, "%c%.6s%.5s%.5s%.3s%.4s%c%.7s", immediateRef[31 - 12], imm10_5, src1_register, destination_register, func3, imm4_1, immediateRef[31 - 11], opcode);
+        strncpy(imm10_5, b_immediate + (12 - 9), 6);
+        strncpy(imm4_1, b_immediate + (12 - 4), 4);
+        sprintf(pline, "%c%.6s%.5s%.5s%.3s%.4s%c%.7s", b_immediate[0], imm10_5, src1_register, destination_register, func3, imm4_1, b_immediate[1], opcode);
     }
     else if (strcmp(type, "U_TYPE") == 0)
     {
@@ -534,7 +540,8 @@ int main(int argc, char *argv[])
 
         char *type = getInstructionType(keyword);
 
-        if (strcmp(type, NOT_VALID) == 0) errorHandler("Invalid instruction", out_file, lineNumber, argv[1]);
+        if (strcmp(type, NOT_VALID) == 0)
+            errorHandler("Invalid instruction", out_file, lineNumber, argv[1]);
         count++;
         /**
          * Handling opcodes
@@ -639,7 +646,9 @@ int main(int argc, char *argv[])
                 {
                     strcat(operandOrder, OFFSET);
                 }
+
                 int immediateValue = 0;
+                int isSignedImmediate = 0;
                 int length = strlen(in_token);
                 for (int i = 0; i < length; i++)
                 {
@@ -647,12 +656,18 @@ int main(int argc, char *argv[])
                         break;
                     if (in_token[i] == '\n')
                         continue;
+                    if (in_token[i] == '-')
+                    {
+                        isSignedImmediate = 1;
+                        continue;
+                    }
                     if (isdigit(in_token[i]))
                     {
                         immediateValue = immediateValue * 10 + (in_token[i] - '0');
                     }
                 }
-
+                if (isSignedImmediate)
+                    immediateValue = immediateValue * -1;
                 strcpy(immediate, "");
                 for (int i = 31; i >= 0; i--)
                 {
@@ -668,12 +683,11 @@ int main(int argc, char *argv[])
                 }
                 immediate[32] = '\0';
             }
-
             in_token = strtok(NULL, delim);
             count++;
         }
         PRINT("Operand order for %s %s instruction :%s\n", type, keyword, operandOrder);
-        if (strcmp(operandOrder, operandOrderChecker(type, keyword)) !=0 && !(strcasecmp(keyword, "nop") == 0 || strcasecmp(keyword, "nop\n") == 0))
+        if (strcmp(operandOrder, operandOrderChecker(type, keyword)) != 0 && !(strcasecmp(keyword, "nop") == 0 || strcasecmp(keyword, "nop\n") == 0))
             errorHandler("Invalid operand order", out_file, lineNumber, argv[1]);
         encodeToFormat(fo, keyword, type, destination_register, src1_register, src2_register, immediate, base_register);
     }
