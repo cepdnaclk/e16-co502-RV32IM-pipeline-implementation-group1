@@ -8,3 +8,5 @@ nop
 nop
 nop
 bne x1 x0 -4
+nop
+nop
