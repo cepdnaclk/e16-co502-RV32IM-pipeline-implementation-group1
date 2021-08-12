@@ -47,7 +47,6 @@ module ex_mem_pipeline_reg(
 
 
     //RESETTING output registers
-    //TODO: set proper values in RESET operation -> change the RESET test in the testbench
     always @ (*) begin
         if (RESET) begin
             #1;
