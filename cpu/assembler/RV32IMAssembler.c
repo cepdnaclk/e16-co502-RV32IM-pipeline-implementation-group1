@@ -416,11 +416,15 @@ int encodeToFormat(FILE *fo, char *keyword, char *type, char *destination_regist
     }
     else if (strcmp(type, "B_TYPE") == 0)
     {
+        char b_immediate[13] = "";
+        char b_imm10_0[12] = "";
+        strncpy(b_imm10_0, immediateRef + (31 - 10), 11);
+        sprintf(b_immediate, "%c%.11s", immediateRef[0], b_imm10_0);
         char imm10_5[7] = "";
         char imm4_1[5] = "";
-        strncpy(imm10_5, immediateRef + (31 - 10), 6);
-        strncpy(imm4_1, immediateRef + (31 - 4), 4);
-        sprintf(pline, "%c%.6s%.5s%.5s%.3s%.4s%c%.7s", immediateRef[31 - 12], imm10_5, src1_register, destination_register, func3, imm4_1, immediateRef[31 - 11], opcode);
+        strncpy(imm10_5, b_immediate + (12 - 9), 6);
+        strncpy(imm4_1, b_immediate + (12 - 3), 4);
+        sprintf(pline, "%c%.6s%.5s%.5s%.3s%.4s%c%.7s", b_immediate[0], imm10_5, src1_register, destination_register, func3, imm4_1, b_immediate[1], opcode);
     }
     else if (strcmp(type, "U_TYPE") == 0)
     {
