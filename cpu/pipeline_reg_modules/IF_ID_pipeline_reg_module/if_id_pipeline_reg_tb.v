@@ -37,7 +37,7 @@ module if_id_pipeline_reg_tb;
         RESET = 1'b0;
 
         `assert(OUT_INSTRUCTION, 32'd0);
-        `assert(OUT_PC, -32'd4);
+        `assert(OUT_PC, 32'd0);
 
         $display("TEST 01 : RESET TEST Passed!");
 
