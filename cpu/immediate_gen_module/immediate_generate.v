@@ -24,18 +24,18 @@ module immediate_generate(IN, OUT, IMM_SEL);
     assign U_OUT[31:12] = IN[24:5];
                
     // J type Immediate
-    assign J_OUT[0] = 0;        
-    assign J_OUT[10:1] = IN[23:14];
-    assign J_OUT[11] = IN[13];
-    assign J_OUT[19:12] = IN[12:5];
-    assign J_OUT[31:20] = {12{IN[24]}};
+    assign J_OUT[1:0] = 2'b00;        
+    assign J_OUT[11:2] = IN[23:14];
+    assign J_OUT[12] = IN[13];
+    assign J_OUT[20:13] = IN[12:5];
+    assign J_OUT[31:21] = {11{IN[24]}};
 
     // B Type Immediate
-    assign B_OUT[0] = 0;
-    assign B_OUT[4:1] = IN[4:1];
-    assign B_OUT[10:5] = IN[23:18];
-    assign B_OUT[11] = IN[0];
-    assign B_OUT[31:12] = {20{IN[24]}};
+    assign B_OUT[1:0] = 2'b00;
+    assign B_OUT[5:2] = IN[4:1];
+    assign B_OUT[11:6] = IN[23:18];
+    assign B_OUT[12] = IN[0];
+    assign B_OUT[31:13] = {19{IN[24]}};
 
     //I Type Immediate
     assign I_SIGN_OUT[11:0] = IN[24:13] ;
