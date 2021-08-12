@@ -13,7 +13,6 @@ module if_id_pipeline_reg(
     output reg [31:0] OUT_INSTRUCTION, OUT_PC;
 
     //RESETTING output registers
-    //TODO: set proper values in RESET operation -> change the RESET test in the testbench
     always @ (*) begin
         if (RESET) begin
             #1;

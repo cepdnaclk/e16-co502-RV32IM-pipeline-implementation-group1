@@ -42,7 +42,6 @@ module mem_wb_pipeline_reg(
     output reg OUT_REG_WRITE_EN;
 
     //RESETTING output registers
-    //TODO: set proper values in RESET operation -> change the RESET test in the testbench
     always @ (*) begin
         if (RESET) begin
             #1;
