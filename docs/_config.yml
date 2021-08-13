@@ -1,8 +1,10 @@
 remote_theme: pmarsceill/just-the-docs
+title: RV32IM Pipeline Implementation
+description: A Jekyll theme for documentation
 
 # Aux links for the upper right navigation
 aux_links:
-  "GitHub Repository":
+  "Just the Docs on GitHub":
     - "//github.com/cepdnaclk/e16-co502-RV32IM-pipeline-implementation-group1"
 
 # Makes Aux links open in a new tab. Default is false
