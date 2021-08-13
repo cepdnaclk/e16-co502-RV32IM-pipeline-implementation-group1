@@ -2,7 +2,6 @@
 layout: default
 title: Home
 nav_order: 1
-has_children: true
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
