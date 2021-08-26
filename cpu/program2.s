@@ -1,6 +1,12 @@
-addi x1 x0 8
+addi x1 x0 5
 addi x2 x0 1
-sll x3 x1 x2
-div x4 x3 x1
-add x5 x3 x2
-rem x6 x5 x1
+nop
+nop
+nop
+sub x1 x1 x2
+nop
+nop
+nop
+bne x1 x0 -4
+nop
+nop
