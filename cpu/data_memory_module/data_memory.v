@@ -9,7 +9,7 @@ input[127:0]     	WRITEDATA;
 output reg [127:0]	READDATA;
 output reg      	BUSYWAIT;
 
-`define READ_WRITE_DELAY #10
+`define READ_WRITE_DELAY #40
 
 //Declare memory array 524288-bits
 //512kB

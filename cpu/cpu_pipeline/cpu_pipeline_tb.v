@@ -35,7 +35,7 @@ initial begin
     #1;
     RESET = 1'b0;
     
-    #1000;
+    #5000;
     $finish;
     
 end
