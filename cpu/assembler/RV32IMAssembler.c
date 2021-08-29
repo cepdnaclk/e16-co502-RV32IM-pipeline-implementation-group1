@@ -374,11 +374,15 @@ int encodeToFormat(FILE *fo, char *keyword, char *type, char *destination_regist
     }
     else if (strcmp(type, "J_TYPE") == 0)
     {
+        char j_immediate[21] = "";
+        char j_imm18_0[19] = "";
+        strncpy(j_imm18_0, immediateRef + (31 - 18), 19);
+        sprintf(j_immediate, "%c%.19s", immediateRef[0], j_imm18_0);
         char imm10_1[11] = "";
         char imm19_12[9] = "";
-        strncpy(imm10_1, immediateRef + (31 - 10), 10);
-        strncpy(imm19_12, immediateRef + (32 - 19), 8);
-        sprintf(pline, "%c%.10s%c%.8s%.5s%.7s", immediateRef[31 - 20], imm10_1, immediateRef[31 - 11], imm19_12, destination_register, opcode);
+        strncpy(imm10_1, j_immediate + (20 - 10), 10);
+        strncpy(imm19_12, j_immediate + (20 - 19), 8);
+        sprintf(pline, "%c%.10s%c%.8s%.5s%.7s", j_immediate[0], imm10_1, j_immediate[20 - 11], imm19_12, destination_register, opcode);
     }
     else if (strcmp(type, "I_TYPE") == 0)
     {
@@ -424,7 +428,7 @@ int encodeToFormat(FILE *fo, char *keyword, char *type, char *destination_regist
         sprintf(b_immediate, "%c%.11s", immediateRef[0], b_imm10_0);
         char imm10_5[7] = "";
         char imm4_1[5] = "";
-        strncpy(imm10_5, b_immediate + (12 - 9), 6);
+        strncpy(imm10_5, b_immediate + (12 - 10), 6);
         strncpy(imm4_1, b_immediate + (12 - 4), 4);
         sprintf(pline, "%c%.6s%.5s%.5s%.3s%.4s%c%.7s", b_immediate[0], imm10_5, src1_register, destination_register, func3, imm4_1, b_immediate[1], opcode);
     }
