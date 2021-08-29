@@ -14,6 +14,7 @@ module ex_mem_pipeline_reg_tb;
             IN_IMMEDIATE;   
 
     reg IN_REG_WRITE_EN,
+        IN_DATA_MEM_SEL,
         CLK, 
         RESET, 
         BUSYWAIT;
@@ -27,7 +28,7 @@ module ex_mem_pipeline_reg_tb;
             OUT_DATA2,
             OUT_IMMEDIATE;
     
-    wire OUT_REG_WRITE_EN;
+    wire OUT_REG_WRITE_EN, OUT_DATA_MEM_SEL;
 
 
     ex_mem_pipeline_reg my_ex_mem_pipeline_reg( IN_INSTRUCTION,
@@ -35,6 +36,7 @@ module ex_mem_pipeline_reg_tb;
                                                 IN_ALU_RESULT, 
                                                 IN_DATA2, 
                                                 IN_IMMEDIATE,
+                                                IN_DATA_MEM_SEL,
                                                 IN_READ_WRITE,
                                                 IN_WB_SEL,
                                                 IN_REG_WRITE_EN,
@@ -43,6 +45,7 @@ module ex_mem_pipeline_reg_tb;
                                                 OUT_ALU_RESULT,
                                                 OUT_DATA2,
                                                 OUT_IMMEDIATE, 
+                                                OUT_DATA_MEM_SEL,
                                                 OUT_READ_WRITE,
                                                 OUT_WB_SEL,
                                                 OUT_REG_WRITE_EN,
@@ -62,6 +65,7 @@ module ex_mem_pipeline_reg_tb;
         IN_ALU_RESULT = 32'd45; 
         IN_DATA2 = 32'd33;  
         IN_IMMEDIATE = 32'd56; 
+        IN_DATA_MEM_SEL = 1'b1;
         IN_READ_WRITE  = 4'd1;
         IN_WB_SEL = 2'b11;
         IN_REG_WRITE_EN = 1'b1;
@@ -85,6 +89,7 @@ module ex_mem_pipeline_reg_tb;
         `assert(OUT_ALU_RESULT, 32'd0);
         `assert(OUT_DATA2, 32'd0);
         `assert(OUT_IMMEDIATE, 32'd0);
+        `assert(OUT_DATA_MEM_SEL, 32'd0);
         `assert(OUT_READ_WRITE, 4'd0);
         `assert(OUT_WB_SEL, 2'b0);
         `assert(OUT_REG_WRITE_EN, 1'b0);
@@ -105,6 +110,7 @@ module ex_mem_pipeline_reg_tb;
         IN_ALU_RESULT = 32'd30; 
         IN_DATA2 = 32'd40;  
         IN_IMMEDIATE = 32'd50; 
+        IN_DATA_MEM_SEL = 1'b1;
         IN_READ_WRITE = 4'd1;
         IN_WB_SEL = 2'b01;
         IN_REG_WRITE_EN = 1'b1;
@@ -120,6 +126,7 @@ module ex_mem_pipeline_reg_tb;
             `assert(OUT_ALU_RESULT, 32'd30);
             `assert(OUT_DATA2, 32'd40);
             `assert(OUT_IMMEDIATE, 32'd50);
+            `assert(OUT_DATA_MEM_SEL, 1'b1);
             `assert(OUT_READ_WRITE, 4'd1);
             `assert(OUT_WB_SEL, 2'b01);
             `assert(OUT_REG_WRITE_EN, 1'b1);
@@ -145,6 +152,7 @@ module ex_mem_pipeline_reg_tb;
         IN_ALU_RESULT = 32'd80; 
         IN_DATA2 = 32'd50;  
         IN_IMMEDIATE = 32'd90; 
+        IN_DATA_MEM_SEL = 1'b0;
         IN_READ_WRITE  = 4'd3;
         IN_WB_SEL = 2'b11;
         IN_REG_WRITE_EN = 1'b0;
@@ -160,6 +168,7 @@ module ex_mem_pipeline_reg_tb;
             `assert(OUT_ALU_RESULT, 32'd30);
             `assert(OUT_DATA2, 32'd40);
             `assert(OUT_IMMEDIATE, 32'd50);
+            `assert(OUT_DATA_MEM_SEL, 1'b1);
             `assert(OUT_READ_WRITE, 4'd1);
             `assert(OUT_WB_SEL, 2'b01);
             `assert(OUT_REG_WRITE_EN, 1'b1);
