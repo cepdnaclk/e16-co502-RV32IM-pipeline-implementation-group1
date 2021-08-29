@@ -4,6 +4,7 @@ module ex_mem_pipeline_reg(
     IN_ALU_RESULT, 
     IN_DATA2, 
     IN_IMMEDIATE,
+    IN_DATA_MEM_SEL,
     IN_READ_WRITE,
     IN_WB_SEL,
     IN_REG_WRITE_EN,
@@ -12,6 +13,7 @@ module ex_mem_pipeline_reg(
     OUT_ALU_RESULT,
     OUT_DATA2,
     OUT_IMMEDIATE, 
+    OUT_DATA_MEM_SEL,
     OUT_READ_WRITE,
     OUT_WB_SEL,
     OUT_REG_WRITE_EN,
@@ -29,7 +31,8 @@ module ex_mem_pipeline_reg(
             IN_DATA2,
             IN_IMMEDIATE;   
                 
-    input IN_REG_WRITE_EN,
+    input IN_DATA_MEM_SEL,
+        IN_REG_WRITE_EN,
         CLK, 
         RESET, 
         BUSYWAIT;
@@ -43,7 +46,7 @@ module ex_mem_pipeline_reg(
                     OUT_DATA2,
                     OUT_IMMEDIATE; 
 
-    output reg OUT_REG_WRITE_EN;
+    output reg OUT_DATA_MEM_SEL, OUT_REG_WRITE_EN;
 
 
     //RESETTING output registers
@@ -55,6 +58,7 @@ module ex_mem_pipeline_reg(
             OUT_ALU_RESULT = 32'd0;
             OUT_DATA2 = 32'd0;
             OUT_IMMEDIATE =  32'd0;
+            OUT_DATA_MEM_SEL  = 1'b0;
             OUT_READ_WRITE = 4'd0;
             OUT_WB_SEL = 2'b0;
             OUT_REG_WRITE_EN = 1'b0;
@@ -72,6 +76,7 @@ module ex_mem_pipeline_reg(
             OUT_ALU_RESULT <= #1 IN_ALU_RESULT;
             OUT_DATA2 <= #1 IN_DATA2;
             OUT_IMMEDIATE <= #1  IN_IMMEDIATE;
+            OUT_DATA_MEM_SEL <= #1 IN_DATA_MEM_SEL;
             OUT_READ_WRITE <= #1 IN_READ_WRITE;
             OUT_WB_SEL <= #1 IN_WB_SEL;
             OUT_REG_WRITE_EN <= #1 IN_REG_WRITE_EN;
