@@ -7,10 +7,10 @@ module forwarding_unit_tb;
     reg OP1SEL, OP2SEL;
     reg [6:0] OPCODE;
     wire DATA1IDSEL, DATA2IDSEL, DATAMEMSEL;
-    wire [1:0] DATA1EXESEL, DATA2EXESEL;
+    wire [1:0] DATA1ALUSEL, DATA2ALUSEL, DATA1BJSEL, DATA2BJSEL;
 
     integer j;
-    forwarding_unit my_forwarding_unit(ADDR1, ADDR2, WB_ADDR, MEM_ADDR, EXE_ADDR, OP1SEL, OP2SEL, OPCODE, DATA1IDSEL, DATA2IDSEL, DATA1EXESEL, DATA2EXESEL, DATAMEMSEL);
+    forwarding_unit my_forwarding_unit(ADDR1, ADDR2, WB_ADDR, MEM_ADDR, EXE_ADDR, OP1SEL, OP2SEL, OPCODE, DATA1IDSEL, DATA2IDSEL, DATA1ALUSEL, DATA2ALUSEL, DATA1BJSEL, DATA2BJSEL, DATAMEMSEL);
 
     initial begin
         $dumpfile("forwarding_unit_wavedata.vcd");
@@ -34,9 +34,11 @@ module forwarding_unit_tb;
         #0;
         `assert(DATA1IDSEL,1'b0);
         `assert(DATA2IDSEL,1'b0);
-        `assert(DATA1EXESEL,2'b00);
-        `assert(DATA2EXESEL,2'b01);
+        `assert(DATA1ALUSEL,2'b00);
+        `assert(DATA2ALUSEL,2'b01);
         `assert(DATAMEMSEL,1'b1);
+        `assert(DATA1BJSEL,2'b00);
+        `assert(DATA2BJSEL,2'b11);
         $display("Forwarding unit Test 01 - Able to detect RW -> MEM data dependancy test passed!");
 
 
@@ -59,9 +61,11 @@ module forwarding_unit_tb;
         #0;
         `assert(DATA1IDSEL,1'b0);
         `assert(DATA2IDSEL,1'b0);
-        `assert(DATA1EXESEL,2'b00);
-        `assert(DATA2EXESEL,2'b10);
+        `assert(DATA1ALUSEL,2'b00);
+        `assert(DATA2ALUSEL,2'b10);
         `assert(DATAMEMSEL,1'b0);
+        `assert(DATA1BJSEL,2'b00);
+        `assert(DATA2BJSEL,2'b10);
 
         $display("Forwarding unit Test 02 - Able to detect RW -> EX data dependancy test passed!");
       
@@ -85,9 +89,11 @@ module forwarding_unit_tb;
         #0;
         `assert(DATA1IDSEL,1'b0);
         `assert(DATA2IDSEL,1'b1);
-        `assert(DATA1EXESEL,2'b00);
-        `assert(DATA2EXESEL,2'b00);
+        `assert(DATA1ALUSEL,2'b00);
+        `assert(DATA2ALUSEL,2'b00);
         `assert(DATAMEMSEL,1'b0);
+        `assert(DATA1BJSEL,2'b00);
+        `assert(DATA2BJSEL,2'b00);
         $display("Forwarding unit Test 03 - Able to detect RW -> ID data dependancy test passed!");
     
         /* ------- Forwarding unit Test 04 ----------
@@ -108,9 +114,11 @@ module forwarding_unit_tb;
         #0;
         `assert(DATA1IDSEL,1'b0);
         `assert(DATA2IDSEL,1'b0);
-        `assert(DATA1EXESEL,2'b11);
-        `assert(DATA2EXESEL,2'b00);
+        `assert(DATA1ALUSEL,2'b11);
+        `assert(DATA2ALUSEL,2'b00);
         `assert(DATAMEMSEL,1'b0);
+        `assert(DATA1BJSEL,2'b11);
+        `assert(DATA2BJSEL,2'b00);
         $display("Forwarding unit Test 04 - Able to detect MEM -> EXE data dependancy test passed!");
 
         /* ------- Forwarding unit Test 05 ----------
@@ -131,9 +139,11 @@ module forwarding_unit_tb;
         #0;
         `assert(DATA1IDSEL,1'b0);
         `assert(DATA2IDSEL,1'b0);
-        `assert(DATA1EXESEL,2'b00);
-        `assert(DATA2EXESEL,2'b00);
+        `assert(DATA1ALUSEL,2'b00);
+        `assert(DATA2ALUSEL,2'b00);
         `assert(DATAMEMSEL,1'b0);
+        `assert(DATA1BJSEL,2'b00);
+        `assert(DATA2BJSEL,2'b00);
         $display("Forwarding unit Test 05 - No data dependancy test passed!");
 
         /* ------- Forwarding unit Test 06 ----------
@@ -157,9 +167,11 @@ module forwarding_unit_tb;
         #0;
         `assert(DATA1IDSEL,1'b1);
         `assert(DATA2IDSEL,1'b0);
-        `assert(DATA1EXESEL,2'b00);
-        `assert(DATA2EXESEL,2'b00);
+        `assert(DATA1ALUSEL,2'b00);
+        `assert(DATA2ALUSEL,2'b00);
         `assert(DATAMEMSEL,1'b0);
+        `assert(DATA1BJSEL,2'b00);
+        `assert(DATA2BJSEL,2'b00);
         $display("Forwarding unit Test 06 - All dependancies test passed!");
         
         
