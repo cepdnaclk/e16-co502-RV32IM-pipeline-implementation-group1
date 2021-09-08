@@ -67,7 +67,7 @@ module id_ex_pipeline_reg(
     always @ (*) begin
         if (RESET) begin
             #1;
-            OUT_INSTRUCTION = 5'd0;
+            OUT_INSTRUCTION = 5'dx;
             OUT_PC = 32'd0;
             OUT_DATA1 = 32'd0;
             OUT_DATA2 = 32'd0;
