@@ -24,6 +24,8 @@ initial begin
     SELECT = 2'b11;
     #1;
     SELECT = 2'bxx;
+    #1;
+    SELECT = 2'bx0;
 end
 
 endmodule

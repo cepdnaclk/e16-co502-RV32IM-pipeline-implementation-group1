@@ -17,7 +17,7 @@ module if_id_pipeline_reg(
         if (RESET) begin
             #1;
             OUT_PC = 32'd0;
-            OUT_INSTRUCTION = 32'd0;
+            OUT_INSTRUCTION = 32'dx;
         end
     end
 
