@@ -54,14 +54,14 @@ module ex_mem_pipeline_reg(
         if (RESET) begin
             #1;
             OUT_INSTRUCTION = 5'dx;
-            OUT_PC = 32'd0;
-            OUT_ALU_RESULT = 32'd0;
-            OUT_DATA2 = 32'd0;
-            OUT_IMMEDIATE =  32'd0;
-            OUT_DATAMEMSEL  = 1'b0;
-            OUT_READ_WRITE = 4'd0;
-            OUT_WB_SEL = 2'b0;
-            OUT_REG_WRITE_EN = 1'b0;
+            OUT_PC = 32'dx;
+            OUT_ALU_RESULT = 32'dx;
+            OUT_DATA2 = 32'dx;
+            OUT_IMMEDIATE =  32'dx;
+            OUT_DATAMEMSEL  = 1'bx;
+            OUT_READ_WRITE = 4'dx;
+            OUT_WB_SEL = 2'bx;
+            OUT_REG_WRITE_EN = 1'bx;
         end
     end
 
