@@ -41,6 +41,6 @@ cd ../scripts
 
 ./test-cpu-pipeline.sh
 
-cd ../cpu_pipeline
+cd ..
 
-# gtkwave cpu_pipeline_wavedata.vcd
+gtkwave wavedata_sample.gtkw

@@ -1,0 +1,102 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Thu Sep  9 08:57:55 2021
+[*]
+[dumpfile] "/home/buddhi/projects/e16-co502-RV32IM-pipeline-implementation-group1/cpu/cpu_pipeline/cpu_pipeline_wavedata.vcd"
+[dumpfile_mtime] "Thu Sep  9 08:55:48 2021"
+[dumpfile_size] 112485
+[savefile] "/home/buddhi/projects/e16-co502-RV32IM-pipeline-implementation-group1/cpu/wavedata_sample.gtkw"
+[timestart] 0
+[size] 1920 1016
+[pos] -1 -1
+*-8.691739 1885 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] cpu_pipeline_tb.
+[treeopen] cpu_pipeline_tb.cpu.
+[sst_width] 233
+[signals_width] 182
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@28
+cpu_pipeline_tb.CLK
+cpu_pipeline_tb.RESET
+@420
+cpu_pipeline_tb.cpu.PC_OUT[31:0]
+@22
+cpu_pipeline_tb.cpu.INSTRUCTION[31:0]
+@200
+-INST DECODE
+@420
+cpu_pipeline_tb.cpu.id_ex_reg.IN_PC[31:0]
+@28
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_DATA1ALUSEL[1:0]
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_DATA2ALUSEL[1:0]
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_DATA1BJSEL[1:0]
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_DATA2BJSEL[1:0]
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_ALU_OP[4:0]
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_BRANCH_JUMP[2:0]
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_DATAMEMSEL
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_READ_WRITE[3:0]
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_WB_SEL[1:0]
+[color] 3
+cpu_pipeline_tb.cpu.id_ex_reg.IN_REG_WRITE_EN
+@420
+cpu_pipeline_tb.cpu.id_ex_reg.IN_DATA1[31:0]
+cpu_pipeline_tb.cpu.id_ex_reg.IN_DATA2[31:0]
+cpu_pipeline_tb.cpu.id_ex_reg.IN_IMMEDIATE[31:0]
+@25
+cpu_pipeline_tb.cpu.id_ex_reg.IN_INSTRUCTION[4:0]
+@200
+-EXECUTE
+@420
+cpu_pipeline_tb.cpu.ex_mem_reg.IN_PC[31:0]
+@28
+[color] 3
+cpu_pipeline_tb.cpu.ex_mem_reg.IN_DATAMEMSEL
+[color] 3
+cpu_pipeline_tb.cpu.ex_mem_reg.IN_READ_WRITE[3:0]
+[color] 3
+cpu_pipeline_tb.cpu.ex_mem_reg.IN_WB_SEL[1:0]
+[color] 3
+cpu_pipeline_tb.cpu.ex_mem_reg.IN_REG_WRITE_EN
+@420
+cpu_pipeline_tb.cpu.ex_mem_reg.IN_ALU_RESULT[31:0]
+cpu_pipeline_tb.cpu.ex_mem_reg.IN_IMMEDIATE[31:0]
+cpu_pipeline_tb.cpu.ex_mem_reg.IN_DATA2[31:0]
+@25
+cpu_pipeline_tb.cpu.ex_mem_reg.IN_INSTRUCTION[4:0]
+@200
+-MEM
+@420
+cpu_pipeline_tb.cpu.mem_wb_reg.IN_PC_4[31:0]
+@28
+[color] 3
+cpu_pipeline_tb.cpu.mem_wb_reg.IN_WB_SEL[1:0]
+[color] 3
+cpu_pipeline_tb.cpu.mem_wb_reg.IN_REG_WRITE_EN
+@420
+cpu_pipeline_tb.cpu.mem_wb_reg.IN_ALU_RESULT[31:0]
+cpu_pipeline_tb.cpu.mem_wb_reg.IN_IMMEDIATE[31:0]
+cpu_pipeline_tb.cpu.mem_wb_reg.IN_DMEM_OUT[31:0]
+@25
+cpu_pipeline_tb.cpu.mem_wb_reg.IN_INSTRUCTION[4:0]
+@200
+-
+@420
+cpu_pipeline_tb.cpu.register_file.\REGISTER[0][31:0]
+cpu_pipeline_tb.cpu.register_file.\REGISTER[1][31:0]
+cpu_pipeline_tb.cpu.register_file.\REGISTER[2][31:0]
+cpu_pipeline_tb.cpu.register_file.\REGISTER[3][31:0]
+cpu_pipeline_tb.cpu.register_file.\REGISTER[4][31:0]
+cpu_pipeline_tb.cpu.register_file.\REGISTER[5][31:0]
+cpu_pipeline_tb.cpu.register_file.\REGISTER[6][31:0]
+[pattern_trace] 1
+[pattern_trace] 0

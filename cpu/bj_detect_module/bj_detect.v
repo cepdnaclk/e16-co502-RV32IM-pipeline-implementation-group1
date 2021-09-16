@@ -30,6 +30,6 @@ module bj_detect(BRANCH_JUMP, DATA1, DATA2, PC_SEL_OUT);
     and logicAnd5(out5, BRANCH_JUMP[2], BRANCH_JUMP[0], !lt);
     and logicAnd6(out6, !BRANCH_JUMP[2], !BRANCH_JUMP[1], !BRANCH_JUMP[0], eq);
 
-    or logicOr(PC_SEL, out1, out2, out3, out4, out5, out6);
+    or logicOr(PC_SEL, out1, out2, out3, out4, out5, out6);    
 
 endmodule
