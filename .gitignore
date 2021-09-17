@@ -1,5 +1,8 @@
-/**/*.vvp
-/**/*.vcd
-/**/*.out
-/**/*.machine
-/**/*.mem
+# Template specific files
+*.sh
+_site/
+.jekyll-metadata
+Gemfile.lock
+Gemfile
+
+# Add your own files to be ignored from git in here
