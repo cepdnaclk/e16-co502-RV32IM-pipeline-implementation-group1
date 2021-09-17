@@ -6,3 +6,9 @@ Gemfile.lock
 Gemfile
 
 # Add your own files to be ignored from git in here
+
+/**/*.vvp
+/**/*.vcd
+/**/*.out
+/**/*.machine
+/**/*.mem
