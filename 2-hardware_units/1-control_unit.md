@@ -128,6 +128,8 @@ This control signal will select between these 4 sources. The WB_SEL signal is a 
 
 This control signal will enable writing to the register file. When REG_WRITE_EN is set, the write back value is written to the register file and when REG_WRITE_EN is cleared, the write back value is not written to the register file.
 
+---
+
 #### Control Unit Design
 
 ##### Control Signals Generated from the OPCODE
@@ -178,6 +180,8 @@ ALUOP_TYPE intermediate signal, FUNCT3, FUNCT7, IMM_SEL control signal, and R_TY
 ##### Generating the BRANCH_JUMP control signal
 
 BL intermediate signal, OPCODE[2] and FUNCT3 bits were used to generate the BRANCH_JUMP control signal. In B - Type instructions, the FUNCT3 bits define the type of branching. Therefore FUNCT3 bits were used to identify the branch type. OPCODE[2] bit was used to distinguish between the B - Type and the J - Type instructions.
+
+---
 
 #### Instructions and the Control Signals
 
