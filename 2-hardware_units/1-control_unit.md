@@ -68,6 +68,16 @@ This control signal is for the immediate value generation unit. In RISC-V ISA, a
 
 The immediate value generation unit will generate these 7 types of immediate values and the IMM_SEL control signal will select the relevant immediate value. The IMM_SEL control signal is a 3-bit signal and the encoding of the bits are as shown in Table 1.
 
+| Immediate‌ ‌Type | ‌ IMM_SEL[2]‌ | IMM_SEL[1]‌ | IMM_SEL[0] |
+| ---------------- | ------------- | ----------- | ---------- |
+| U‌               | ‌0‌ ‌         | 0‌          | 0‌ ‌       |
+| J‌               | ‌0‌ ‌         | 0‌ ‌        | 1‌ ‌       |
+| S‌               | ‌0‌ ‌         | 1‌          | ‌0‌ ‌      |
+| B‌ ‌             | 0‌ ‌          | 1‌ ‌        | 1‌ ‌       |
+| I_signed‌        | ‌1‌           | ‌0‌         | ‌0‌ ‌      |
+| I_shift‌         | 1‌ ‌          | 0‌          | ‌1‌ ‌      |
+| I_unsigned‌ ‌    | 1‌ ‌          | 1‌ ‌        | 1‌         |
+
 ##### OP1_SEL
 
 The input operand 1 of the ALU unit is of 2 values.
@@ -76,6 +86,11 @@ The input operand 1 of the ALU unit is of 2 values.
 - DATA1 (value from the register file) - For all the other remaining instructions
 
 This control signal will select between these two values. This is a 1 - bit control signal and the encoding is shown in Table 2.
+
+| Operand‌ ‌1‌ ‌Value‌ ‌ | OP1_SEL‌ ‌ |
+| ---------------------- | ---------- |
+| DATA1‌ ‌               | 0‌ ‌       |
+| PC‌ ‌                  | 1‌ ‌       |
 
 ##### OP2_sel
 
@@ -86,9 +101,35 @@ The input operand 2 of the ALU unit is of 2 values.
 
 This control signal will select between these two values. This is a 1 - bit control signal and the encoding is shown in Table 3.
 
+| Operand‌ ‌2‌ ‌Value‌ | ‌OP2_SEL‌ ‌ |
+| -------------------- | ----------- |
+| DATA2‌ ‌             | 0‌ ‌        |
+| Immediate‌ ‌Value‌ ‌ | 1‌ ‌        |
+
 ##### ALU_OP
 
 This signal will select the relevant ALU operation out of the 18 ALU operations . This is a 5 - bit control signal and the encoding is shown in Table 4.
+
+| ALU‌ ‌operation‌ | ‌ ALU_OP[4] | ‌ ALU_OP[3]‌ | ALU_OP[2] | ‌ ALU_OP[1] | ‌ ALU_OP[0] |
+| ---------------- | ----------- | ------------ | --------- | ----------- | ----------- |
+| ADD‌ ‌           | 0‌ ‌        | 0‌ ‌         | 0‌ ‌      | 0‌          | 0‌ ‌        |
+| SUB‌ ‌           | 0‌ ‌        | 0‌           | 0‌        | 1‌          | 0‌ ‌        |
+| SLL‌ ‌           | 0‌ ‌        | 0‌           | 1‌        | 0‌          | 0‌ ‌        |
+| SLT‌ ‌           | 0‌ ‌        | 1‌           | 0‌ ‌      | 0‌ ‌        | 0‌ ‌        |
+| SLTU‌ ‌          | 0‌          | ‌1‌ ‌        | 1‌        | 0‌          | 0‌ ‌        |
+| XOR‌ ‌           | 1‌ ‌        | 0‌           | 0‌ ‌      | 0‌ ‌        | 0‌ ‌        |
+| SRL‌ ‌           | 1‌ ‌        | 0‌ ‌         | 1‌ ‌      | 0‌ ‌        | 0‌ ‌        |
+| SRA‌ ‌           | 1‌ ‌        | 0‌ ‌         | 1‌        | ‌1‌ ‌       | 0‌          |
+| OR‌ ‌            | 1‌ ‌        | 1‌ ‌         | 0‌ ‌      | 0‌ ‌        | 0‌ ‌        |
+| AND‌ ‌           | 1‌ ‌        | 1‌ ‌         | 1‌        | ‌ 0‌ ‌      | 0‌          |
+| MUL‌ ‌           | 0‌          | 0‌ ‌         | 0‌ ‌      | 0‌ ‌        | 1‌ ‌        |
+| MULH‌ ‌          | 0‌          | ‌0‌          | 1‌ ‌      | 0‌ ‌        | 1‌ ‌        |
+| MULHU‌ ‌         | 0‌          | 1‌           | 0‌        | 0‌ ‌        | 1‌ ‌        |
+| MULHSU‌ ‌        | 0‌          | ‌1‌          | 1‌        | ‌ 0‌ ‌      | 1‌          |
+| DIV‌ ‌           | 1‌ ‌        | 0‌ ‌         | 0‌ ‌      | 0‌ ‌        | 1‌ ‌        |
+| DIVU‌ ‌          | 1‌ ‌        | 0‌ ‌         | 1‌        | ‌0‌ ‌       | 1‌          |
+| REM‌ ‌           | 1‌ ‌        | 1‌           | 0‌        | ‌0‌ ‌       | 1‌ ‌        |
+| REMU‌ ‌          | 1‌ ‌        | 1‌ ‌         | 1‌        | ‌0‌         | ‌1‌ ‌       |
 
 ##### BRANCH_JUMP
 
@@ -105,13 +146,43 @@ This control signal will select the type of branching to be considered by the Br
 
 BRANCH_JUMP control signal is a 3 - bit control signal and encoding is shown in Table 5.
 
+| Branch‌ ‌Type | BRANCH_JUMP[2] | BRANCH_JUMP[1] | BRANCH_JUMP[0] |
+| ------------- | -------------- | -------------- | -------------- |
+| BEQ‌          | ‌0‌            | ‌0‌            | ‌0‌ ‌          |
+| BNE‌          | ‌0‌            | ‌0‌ ‌          | 1‌ ‌           |
+| NO‌           | ‌0‌ ‌          | 1‌             | ‌0‌ ‌          |
+| J‌ ‌          | 0‌ ‌           | 1‌             | 1‌ ‌           |
+| BLT‌ ‌        | 1‌             | ‌0‌ ‌          | 0‌ ‌           |
+| BGE‌ ‌        | 1‌ ‌           | 0‌ ‌           | 1‌ ‌           |
+| BLTU‌         | ‌1‌            | ‌1‌            | ‌0‌ ‌          |
+| BGEU‌ ‌       | 1‌ ‌           | 1‌ ‌           | 1‌ ‌           |
+
 ##### MEM_WRITE
 
 This control signal will enable writing to the data memory. When MEM_WRITE is set, data is written to the data memory and when MEM_WRITE is cleared, data is not written to the data memory.
 
+| Load/Store Type  | READ_WRITE[3] | READ_WRITE[2] | READ_WRITE[1] | READ_WRITE[0] |
+| ---------------- | ------------- | ------------- | ------------- | ------------- |
+| No‌ ‌load/store‌ | ‌ 0‌ ‌        | 0‌            | ‌0‌ ‌         | 0‌ ‌          |
+| LB‌ ‌            | 1‌            | ‌ 0‌          | ‌0‌           | ‌0‌ ‌         |
+| LH‌ ‌            | 1‌ ‌          | 0‌ ‌          | 0‌ ‌          | 1‌ ‌          |
+| LW‌              | ‌1‌ ‌         | 0‌ ‌          | 1‌            | ‌0‌ ‌         |
+| LBU‌ ‌           | 1‌ ‌          | 1‌            | ‌0‌ ‌         | 0‌ ‌          |
+| LHU‌ ‌           | 1‌            | ‌1‌           | ‌0‌ ‌         | 1‌ ‌          |
+| SB‌              | ‌1‌           | ‌0‌ ‌         | 1‌ ‌          | 1‌ ‌          |
+| SH‌ ‌            | 1‌ ‌          | 1‌ ‌          | 1‌ ‌          | 0‌ ‌          |
+| SW‌ ‌            | 1‌            | ‌1‌ ‌         | 1‌ ‌          | 1‌            |
+
 ##### MEM_READ
 
 This control signal will enable reading from the data memory. When MEM_READ is set, data is read from the data memory and when MEM_READ is cleared, data is not read from the memory.
+
+| Writeback‌ ‌Source‌            | ‌WB_SEL[1]‌ | WB_SEL[0]‌ |
+| ------------------------------ | ----------- | ---------- | --- |
+| ALU‌ ‌result‌ ‌                | 0‌ ‌        | 0‌         | ‌   |
+| Data‌ ‌from‌ ‌data‌ ‌memory‌ ‌ | 0‌ ‌        | 1‌         |
+| Immediate‌ ‌value‌             | ‌ 1‌ ‌      | 0‌         | ‌   |
+| PC‌ ‌+‌ ‌4‌ ‌                  | 1‌ ‌        | 1‌         |
 
 ##### WB_SEL
 
@@ -162,6 +233,19 @@ To generate the IMM_SEL control signal, the FUCNT3 bits of the instruction were 
 
 FUNCT3 bits in SLTIU, SLLI, SRLI and SRAI instructions were used along with the IMM_TYPE intermediate signal to generate the IMM_SEL control signal.
 
+| Immediate Type | IMM_TYPE[2] | IMM_TYPE[1] | IMM_TYPE[0] | FUNCT3[2] | FUNCT3[1] | FUNCT3[0] | IMM_SEL[2] | IMM_SEL[1] | IMM_SEL[0] |
+| -------------- | ----------- | ----------- | ----------- | --------- | --------- | --------- | ---------- | ---------- | ---------- | ---- | ------ |
+| -              | Inputs      | Inputs      | Inputs      | Inputs    | Inputs    | Inputs    | Outputs    | Outputs    | Outputs    |
+| U‌ ‌           | 0‌ ‌        | 0‌          | ‌ 0‌        | ‌ x‌      | ‌ x‌      | ‌ x‌      | ‌ 0‌       | ‌ 0‌       | ‌ 0‌ ‌     |
+| J‌ ‌           | 0‌          | ‌ 0‌        | ‌ 1‌        | ‌ x‌      | ‌ x‌      | ‌ x‌      | ‌ 0‌ ‌     | 0‌         | ‌ 1‌ ‌     |
+| S‌ ‌           | 0‌ ‌        | 1‌          | ‌ 0‌        | ‌ x‌      | ‌ x‌ ‌    | x‌        | ‌ 0‌       | ‌ 1‌       | ‌ 0‌ ‌     |
+| B‌ ‌           | 0‌ ‌        | 1‌ ‌        | 1‌ ‌        | x‌        | ‌ x‌      | ‌ x‌ ‌    | 0‌         | ‌ 1‌       | ‌ 1‌ ‌     |
+| I_signed‌      | ‌ 1‌        | ‌ 0‌        | ‌ 0‌        | ‌ x‌      | ‌ x‌      | ‌ x‌      | ‌ 1‌       | ‌ 0‌       | ‌ 0‌ ‌     |
+| I_shift‌       | ‌ 1‌ ‌      | 0‌          | ‌ 0         | ‌         | ‌         | x‌        | ‌ 0‌       | ‌ 1‌       | ‌ 1‌       | ‌ 0‌ | ‌ 1‌ ‌ |
+| I_unigned‌ ‌   | 1‌          | ‌ 0‌        | ‌ 0‌        | ‌ 0‌      | ‌ 1‌      | ‌ 1‌      | ‌ 1‌       | ‌ 1‌ ‌     | 1‌         |
+
+<!-- !TODO -->
+
 ##### Generating the ALU_OP control signal
 
 ALUOP_TYPE intermediate signal, FUNCT3, FUNCT7, IMM_SEL control signal, and R_TYPE(generated from the OPCODE) were used to generate the ALU_OP control signal. 4 variants can be considered when generating the control signal.
@@ -180,6 +264,37 @@ ALUOP_TYPE intermediate signal, FUNCT3, FUNCT7, IMM_SEL control signal, and R_TY
 ##### Generating the BRANCH_JUMP control signal
 
 BL intermediate signal, OPCODE[2] and FUNCT3 bits were used to generate the BRANCH_JUMP control signal. In B - Type instructions, the FUNCT3 bits define the type of branching. Therefore FUNCT3 bits were used to identify the branch type. OPCODE[2] bit was used to distinguish between the B - Type and the J - Type instructions.
+
+| Branch Type | OPCODE[2] | BL     | FUNCT3[2] | FUNCT3[1] | FUNCT3[0] | BRANCH_JUMP[2] | BRANCH_JUMP[1] | BRANCH_JUMP[0] |
+| ----------- | --------- | ------ | --------- | --------- | --------- | -------------- | -------------- | -------------- |
+| -           | Inputs    | Inputs | Inputs    | Inputs    | Inputs    | Outouts        | Outouts        | Outouts        |
+| BEQ‌        | ‌ 0‌ ‌    | 1‌ ‌   | 0‌        | ‌0‌       | ‌0‌ ‌     | 0‌ ‌           | 0‌             | ‌ 0‌ ‌         |
+| BNE‌ ‌      | 0‌ ‌      | 1‌ ‌   | 0‌        | 0‌ ‌      | 1‌        | 0‌             | ‌0‌            | ‌1‌ ‌          |
+| NO‌         | ‌x‌ ‌     | 0‌ ‌   | x‌ ‌      | x‌        | x‌        | ‌0‌            | ‌1‌ ‌          | 0‌ ‌           |
+| J‌ ‌        | 1‌ ‌      | 1‌ ‌   | x‌ ‌      | x‌ ‌      | x‌        | ‌0‌ ‌          | 1‌             | ‌1‌ ‌          |
+| BLT‌ ‌      | 0‌ ‌      | 1‌     | ‌ 1‌      | ‌0‌ ‌     | 0‌        | ‌1‌            | ‌0‌ ‌          | 0‌ ‌           |
+| BGE‌ ‌      | 0‌ ‌      | 1‌ ‌   | 1‌        | ‌0‌ ‌     | 1‌ ‌      | 1‌             | ‌0‌ ‌          | 1‌ ‌           |
+| BLTU‌ ‌     | 0‌        | ‌1‌    | ‌1‌ ‌     | 1‌ ‌      | 0‌ ‌      | 1‌ ‌           | 1‌ ‌           | 0‌ ‌           |
+| BGEU‌ ‌     | 0‌ ‌      | 1‌ ‌   | 1‌ ‌      | 1‌ ‌      | 1‌        | ‌1‌ ‌          | 1‌ ‌           | 1‌ ‌           |
+
+##### Generating‌ ‌the‌ ‌READ_WRITE‌ ‌control‌ ‌signal
+
+FUNCT3‌ ‌bits,‌ ‌LOAD‌ ‌and‌ ‌STORE‌ ‌(LOAD‌ ‌and‌ ‌STORE‌ ‌by‌ ‌decoding‌ ‌the‌ ‌OPCODE)‌ ‌signals‌ ‌were‌ ‌used‌ ‌to‌‌ generate‌ ‌the‌ ‌READ_WRITE‌ ‌control‌ ‌signal.‌ ‌LOAD‌ ‌and‌ ‌STORE‌ ‌signals‌ ‌are‌ ‌asserted‌ ‌when‌ ‌the‌‌ instruction‌ ‌is‌ ‌a‌ ‌LOAD‌ ‌or‌ ‌a‌ ‌STORE‌ ‌instruction‌ ‌respectively.‌ ‌FUNCT3‌ ‌bits‌ ‌were‌ ‌used‌ ‌to‌ ‌determine‌ ‌the‌‌ number‌ ‌of‌ ‌bits‌ ‌(8‌ ‌bit,‌ ‌16‌ ‌bit,‌ ‌32‌ ‌bit)‌ ‌loaded/stored.
+
+When‌ ‌the‌ ‌instruction‌ ‌is‌ ‌a‌ ‌LOAD‌ ‌or‌ ‌a‌ ‌STORE,‌ ‌the‌ ‌READ_WRITE[3]‌ ‌bit‌ ‌will‌ ‌get‌ ‌asserted‌ ‌and‌ ‌by‌ ‌using‌‌ only‌ ‌the‌ ‌READ_WRITE[3]‌ ‌bit,‌ ‌the‌ ‌data‌ ‌cache‌ ‌memory‌ ‌can‌ ‌assert‌ ‌the‌ ‌BUSYWAIT‌ ‌signal‌ ‌and‌ ‌the‌‌ remaining‌ ‌bits‌ ‌of‌ ‌the‌ ‌READ_WRITE‌ ‌signal‌ ‌will‌ ‌determine‌ ‌the‌ ‌number‌ ‌of‌ ‌bits‌ ‌stored..‌ ‌If‌ ‌the‌‌ instruction‌ ‌is‌ ‌not‌ ‌a‌ ‌LOAD‌ ‌or‌ ‌a‌ ‌STORE‌ ‌the‌ ‌READ_WRITE[3]‌ ‌bit‌ ‌is‌ ‌cleared.
+
+| Load/Store Type     | STORE | LOAD   | FUCNT3[2] | FUCNT3[1] | FUCNT3[0] | READ_WRITE[3] | READ_WRITE[2] | READ_WRITE[1] | READ_WRITE[0] |
+| ------------------- | ----- | ------ | --------- | --------- | --------- | ------------- | ------------- | ------------- | ------------- |
+| No‌‌ load/stor‌e‌ ‌ | 0‌ ‌  | 0‌ ‌   | x‌ ‌      | x‌ ‌      | x‌        | 0             | 0             | 0             | 0             |
+| No‌‌ load/stor‌e‌ ‌ | 1‌ ‌  | 1 ‌    | x‌ ‌      | x‌ ‌      | x‌        | 0             | 0             | 0             | 0             |
+| LB‌                 | 0‌    | ‌ 1‌ ‌ | 0‌ ‌      | 0‌ ‌      | 0‌ ‌      | 1‌ ‌          | 0‌            | 0‌            | 0‌            |
+| LH‌                 | ‌0‌ ‌ | 1‌     | 0‌ ‌      | 0‌ ‌      | 1‌ ‌      | 1‌            | ‌0‌           | ‌0‌           | ‌1‌           |
+| LW‌ ‌               | 0‌ ‌  | 1‌     | 0‌        | ‌ 1‌ ‌    | 0‌        | ‌1‌ ‌         | 0‌ ‌          | 1‌            | ‌0‌           |
+| LBU‌ ‌              | 0‌ ‌  | 1‌ ‌   | 1‌        | 0‌ ‌      | 0‌ ‌      | 1‌ ‌          | 1‌            | ‌0‌           | ‌0‌           |
+| LHU‌ ‌              | 0‌ ‌  | 1‌ ‌   | 1‌        | ‌0‌       | 1‌ ‌      | 1‌ ‌          | 1‌            | ‌0‌ ‌         | 1‌            |
+| SB‌ ‌               | 1‌ ‌  | 0‌ ‌   | 0‌ ‌      | 0‌ ‌      | 0‌ ‌      | 1‌ ‌          | 0‌ ‌          | 1‌ ‌          | 1‌            |
+| SH‌ ‌               | 1‌ ‌  | 0‌ ‌   | 0‌ ‌      | 0‌ ‌      | 1‌ ‌      | 1‌ ‌          | 1‌ ‌          | 1‌            | ‌0            |
+| SW‌ ‌               | 1‌    | ‌ 0‌ ‌ | 0‌ ‌      | 1‌ ‌      | 0‌ ‌      | 1‌            | ‌1‌ ‌         | 1‌            | ‌1            |
 
 ---
 
