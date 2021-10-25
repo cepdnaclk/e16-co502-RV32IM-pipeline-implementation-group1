@@ -9,7 +9,7 @@ nav_order: 3
 
 ---
 
-Instruction‌ ‌cache‌ ‌operation‌ ‌is‌ ‌similar‌ ‌to‌‌ the‌ ‌data‌ ‌cache‌ ‌and‌ ‌the‌ ‌only‌‌difference‌‌is‌‌ that‌ ‌it‌ ‌does‌ ‌not‌ ‌undergo‌ ‌writing.‌‌
+Instruction‌ ‌cache‌ ‌operation‌ ‌is‌ ‌similar‌ ‌to‌‌ the‌ ‌data‌ ‌cache‌ ‌and‌ ‌the‌ ‌only ‌‌difference‌‌ is‌‌ that‌ ‌it‌ ‌does‌ ‌not‌ ‌undergo‌ ‌writing.‌‌
 
 ![Instruction Cache](../images/memory_hierarchy/icache/icache.png)
 
