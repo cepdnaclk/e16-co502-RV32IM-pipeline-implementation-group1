@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Memory Hiererchy
+title: Memory Hierarchy
 nav_order: 3
 has_children: true
 ---
 
-# Memory Hiererchy
+# Memory Hierarchy
 
 ---
 
@@ -18,3 +18,5 @@ consists‌ ‌of,‌
 - An‌ ‌instruction‌ ‌cache‌ ‌
 - A‌ ‌data‌ ‌memory‌ ‌
 - An‌ ‌instruction‌ ‌cache‌
+
+![Memory Hierarchy](../images/memory_hierarchy/memory_hierarchy.png)
