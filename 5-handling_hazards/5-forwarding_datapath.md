@@ -8,3 +8,5 @@ nav_order: 5
 # Pipeline Datapath with Forwarding Mechanism
 
 ---
+
+![Forwarding Datapath](../images/handling_hazards/forwarding_datapath.png)

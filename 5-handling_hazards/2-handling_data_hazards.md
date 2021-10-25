@@ -19,8 +19,9 @@ certain‌ ‌extent.‌ ‌In‌ ‌a‌ ‌pipeline‌ ‌processor‌ ‌with
 `ld‌ x1‌,‌ ‌8[x2]‌ ‌`
 `st‌ x1‌,‌ ‌8[x3]‌ `
 ‌
-The‌ ‌data‌ ‌loaded‌ ‌from‌ ‌memory‌ ‌is‌ ‌needed‌ ‌to‌ ‌perform‌ ‌the‌ ‌store‌ ‌operation‌ ‌before‌ ‌the‌ ‌load‌‌
-instruction‌ ‌writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R1.‌
+The‌ ‌data‌ ‌loaded‌ ‌from‌ ‌memory‌ ‌is‌ ‌needed‌ ‌to‌ ‌perform‌ ‌the‌ ‌store‌ ‌operation‌ ‌before‌ ‌the‌ ‌load‌‌ instruction‌ ‌writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R1.‌
+
+![RW/MEM](../images/handling_hazards/forwarding_paths/rw_mem.png)
 
 ## RW/EXE‌ ‌Forwarding‌ ‌Path‌ ‌
 
@@ -29,8 +30,9 @@ instruction‌ ‌writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R1.�
 `sub‌ ‌x5,‌ ‌x6,‌ ‌x7‌ ‌`
 `add‌ ‌x3,‌ ‌x2,‌ x1‌ ‌`
 ‌
-The‌‌ data‌‌ loaded‌‌ from‌‌ memory‌‌ is‌‌ needed‌‌ to‌‌ perform‌‌ the‌‌ add‌‌ operation‌‌ before‌‌ the‌‌ load‌‌ instruction‌‌
-writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R1.‌‌
+The‌‌ data‌‌ loaded‌‌ from‌‌ memory‌‌ is‌‌ needed‌‌ to‌‌ perform‌‌ the‌‌ add‌‌ operation‌‌ before‌‌ the‌‌ load‌‌ instruction‌‌ writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R1.‌‌
+
+![RW/EXE](../images/handling_hazards/forwarding_paths/rw_exe.png)
 
 ## RW/ID‌ ‌Forwarding‌ ‌Path‌ ‌
 
@@ -40,16 +42,19 @@ writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R1.‌‌
 `sub‌ ‌x8,‌ ‌x9,‌ ‌x10‌ ‌`
 `add‌ ‌x3,‌ ‌x2,‌ x1‌ ‌`
 ‌
-The ‌‌data‌‌ loaded‌‌ from‌‌ memory‌‌ is‌‌ needed‌‌ to‌‌ perform‌‌ the‌‌ add‌‌ operation‌‌ before‌‌ the‌‌ load‌‌ instruction‌‌
-writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R1.
+The ‌‌data‌‌ loaded‌‌ from‌‌ memory‌‌ is‌‌ needed‌‌ to‌‌ perform‌‌ the‌‌ add‌‌ operation‌‌ before‌‌ the‌‌ load‌‌ instruction‌‌ writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R1.
 
-## MEM/EX‌ ‌Forwarding‌ ‌Path‌ ‌
+![RW/ID](../images/handling_hazards/forwarding_paths/rw_id.png)
+
+## MEM/EX‌E ‌Forwarding‌ ‌Path‌ ‌
 
 ‌
 `add‌ x1‌,‌ ‌x2,‌ ‌x3‌ ‌`
 `sub‌ ‌x5,‌ x1‌,‌ ‌x4‌ ‌`
 ‌
-The‌ ‌alu‌ ‌result‌ ‌from‌ ‌the‌ ‌add‌ ‌instruction‌ ‌is‌ ‌needed‌ ‌to‌ ‌the‌ ‌sub‌ ‌instruction‌ ‌before‌ ‌it‌ ‌writes‌ ‌to‌ ‌the‌‌ register‌ ‌R1.‌ ‌
+The‌ ‌alu‌ ‌result‌ ‌from‌ ‌the‌ ‌add‌ ‌instruction‌ ‌is‌ ‌needed‌ ‌to‌ ‌the‌ ‌sub‌ ‌instruction‌ ‌before‌ ‌it‌ ‌writes‌ ‌to‌ ‌the‌‌ register‌ ‌R1.‌
+
+![MEM/EXE](../images/handling_hazards/forwarding_paths/mem_exe.png)‌
 
 ## Handling‌ ‌Load-Use‌ ‌Hazard‌ ‌with‌ ‌Forwarding‌ ‌and‌ ‌Nop‌ ‌
 
@@ -61,3 +66,5 @@ The‌ ‌data‌ ‌loaded‌ ‌from‌ ‌memory‌ ‌is‌ ‌needed‌ ‌
 instruction‌ ‌writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R4.‌ ‌
 ‌
 In‌‌ Load-Use‌‌ hazards,‌‌it‌‌ is‌‌ required‌‌ to‌‌ have‌‌ a‌‌ nop‌‌ because‌‌ the‌‌ data‌‌ is‌‌ready‌‌ in‌‌ the‌‌ mem‌‌ stage‌‌ at‌‌ the‌‌ end‌‌ of‌‌ the‌‌ clock‌‌ cycle‌‌ and‌‌ instruction‌‌ after‌‌ the‌‌ Load‌‌ instruction‌‌ needs‌‌ the‌‌ loaded‌‌ data‌‌ at‌ ‌the‌ ‌beginning‌ ‌of‌ ‌the‌ ‌clock‌ ‌cycle.
+
+![Load Use](../images/handling_hazards/forwarding_paths/load_use.png)
