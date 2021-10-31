@@ -20,9 +20,7 @@ nav_order: 1
 
 ## Introduction
 
-The objective of this project was to design and implement a 5 stage pipeline CPU to support the RISC-V instruction architecture. This pipeline CPU supports the entire RV32IM ISA which contains 45 instuctions.
-
-The designed pipeline CPU was implemented using behavioural modeling in verilogHDL and icarus Verilog was used compile and simulate. gtkWave was used to observe the behaviour.
+The objective of this project was to design and implement a 5 stage pipeline CPU to support the RISC-V instruction architecture. This pipeline CPU supports the entire RV32IM ISA which contains 45 instructions. The designed pipeline CPU was implemented using behavioral modeling in verilogHDL and icarus Verilog was used compile and simulate. gtkWave was used to observe the behavior.
 
 [GitHub Repository](https://github.com/cepdnaclk/e16-co502-RV32IM-pipeline-implementation-group1)
 
