@@ -1,6 +1,7 @@
 remote_theme: pmarsceill/just-the-docs
 title: RV32IM Pipeline Implementation
-description: A Jekyll theme for documentation
+logo: "/images/uop.png"
+description: A pipeline implementation that supports RV32IM ISA.
 
 # Aux links for the upper right navigation
 aux_links:
