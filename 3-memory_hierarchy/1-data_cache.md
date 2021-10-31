@@ -13,6 +13,7 @@ Data ‌‌cache ‌‌sits‌‌ in‌‌ between‌‌ the‌‌ CPU‌‌ and
 
 In‌ ‌the‌ ‌case‌ ‌of‌ ‌a‌ ‌hit,‌ ‌the‌ ‌cache‌ ‌will‌‌ read/write‌ ‌the‌ ‌data‌ ‌from/to‌ ‌the‌‌ cache.‌ ‌This‌ ‌will‌ ‌not‌ ‌stall‌ ‌the‌ ‌CPU.‌‌ ‌
 ‌
+
 In‌ ‌the‌ ‌case‌ ‌of‌ ‌a‌ ‌miss,‌ ‌the‌ ‌cache‌ ‌will‌‌ stall‌ ‌the‌ ‌CPU‌ ‌and‌ ‌fetch‌ ‌the‌ ‌correct‌‌ block‌ ‌from‌ ‌the‌ ‌memory‌ ‌and‌ ‌update‌‌ the‌‌ cache.‌‌Once‌‌ the‌‌ cache‌‌ is‌‌ updated,‌‌ the‌ ‌CPU‌ ‌can‌ ‌read/write‌ ‌the‌ ‌data‌‌ from/to‌ ‌the‌ ‌cache.‌
 
 ![Data Cache](../images/memory_hierarchy/dcache/dcache.png)

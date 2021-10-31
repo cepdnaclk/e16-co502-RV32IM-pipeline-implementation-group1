@@ -34,6 +34,8 @@ The immediate value generation unit will generate these 7 types of immediate val
 | I_shift‌         | 1‌ ‌          | 0‌          | ‌1‌ ‌      |
 | I_unsigned‌ ‌    | 1‌ ‌          | 1‌ ‌        | 1‌         |
 
+---
+
 ## OP1_SEL
 
 The input operand 1 of the ALU unit is of 2 values.
@@ -48,6 +50,8 @@ This control signal will select between these two values. This is a 1 - bit cont
 | DATA1‌ ‌               | 0‌ ‌       |
 | PC‌ ‌                  | 1‌ ‌       |
 
+---
+
 ## OP2_sel
 
 The input operand 2 of the ALU unit is of 2 values.
@@ -61,6 +65,8 @@ This control signal will select between these two values. This is a 1 - bit cont
 | -------------------- | ----------- |
 | DATA2‌ ‌             | 0‌ ‌        |
 | Immediate‌ ‌Value‌ ‌ | 1‌ ‌        |
+
+---
 
 ## ALU_OP
 
@@ -86,6 +92,8 @@ This signal will select the relevant ALU operation out of the 18 ALU operations 
 | DIVU‌ ‌          | 1‌ ‌        | 0‌ ‌         | 1‌        | ‌0‌ ‌       | 1‌          |
 | REM‌ ‌           | 1‌ ‌        | 1‌           | 0‌        | ‌0‌ ‌       | 1‌ ‌        |
 | REMU‌ ‌          | 1‌ ‌        | 1‌ ‌         | 1‌        | ‌0‌         | ‌1‌ ‌       |
+
+---
 
 ## BRANCH_JUMP
 
@@ -113,9 +121,24 @@ BRANCH_JUMP control signal is a 3 - bit control signal and encoding is shown in 
 | BLTU‌         | ‌1‌            | ‌1‌            | ‌0‌ ‌          |
 | BGEU‌ ‌       | 1‌ ‌           | 1‌ ‌           | 1‌ ‌           |
 
-## MEM_WRITE
+---
 
-This control signal will enable writing to the data memory. When MEM_WRITE is set, data is written to the data memory and when MEM_WRITE is cleared, data is not written to the data memory.
+## READ_WRITE
+
+In‌ ‌RISC-V‌ ‌ISA,‌ ‌there‌ ‌are‌ ‌5‌ ‌types‌ ‌of‌ ‌load‌ ‌instructions‌ ‌and‌ ‌3‌ ‌types‌ ‌of‌ ‌store‌ ‌instructions‌ ‌depending‌ ‌on‌‌ the‌ ‌number‌ ‌of‌ ‌bits‌ ‌loaded/stored.‌ ‌This‌ ‌control‌ ‌signal‌ ‌is‌ ‌sent‌ ‌to‌ ‌the‌ ‌data‌ ‌cache‌ ‌memory‌ ‌and‌ ‌the‌ ‌data‌‌ cache‌ ‌memory‌ ‌will‌ ‌load/store‌ ‌according‌ ‌to‌ ‌the‌ ‌READ_WRITE‌ ‌signal.‌
+
+‌Types‌ ‌of‌ ‌load/store‌ ‌instructions‌‌ are,
+
+- LB‌ ‌-‌ ‌Load‌ ‌byte‌ ‌(8‌ ‌bits‌ ‌from‌ ‌given‌ ‌address)‌ ‌
+- LH‌ ‌-‌ ‌Load‌ ‌halfword‌ ‌(16‌ ‌bits‌ ‌from‌ ‌given‌ ‌address)‌ ‌
+- LW‌ ‌-‌ ‌Load‌ ‌word‌ ‌(32‌ ‌bits‌ ‌from‌ ‌given‌ ‌address)‌ ‌
+- LBU‌ ‌-‌ ‌Load‌ ‌byte‌ ‌unsigned(8‌ ‌bits‌ ‌from‌ ‌given‌ ‌address)‌ ‌
+- LHU‌ ‌-‌ ‌Load‌ ‌halfword‌ ‌unsigned(16‌ ‌bits‌ ‌from‌ ‌given‌ ‌address)‌ ‌
+- SB‌ ‌-‌ ‌Store‌ ‌byte‌ ‌(least‌ ‌significant‌ ‌8‌ ‌bits‌ ‌from‌ ‌input‌ ‌data)‌ ‌
+- SH‌ ‌-‌ ‌Store‌ ‌halfword‌ ‌(least‌ ‌significant‌ ‌16‌ ‌bits‌ ‌from‌ ‌input‌ ‌data)‌ ‌
+- SW‌ ‌-‌ ‌Store‌ ‌word‌ ‌(32‌ ‌bits‌ ‌from‌ ‌input‌ ‌data)‌ ‌
+
+READ_WRITE‌ ‌control‌ ‌signal‌ ‌is‌ ‌a‌ ‌4‌ ‌bit‌ ‌control‌ ‌signal‌ ‌and‌ ‌the‌ ‌encoding‌ ‌is‌ ‌shown‌ ‌in following table.
 
 | Load/Store Type  | READ_WRITE[3] | READ_WRITE[2] | READ_WRITE[1] | READ_WRITE[0] |
 | ---------------- | ------------- | ------------- | ------------- | ------------- |
@@ -129,16 +152,7 @@ This control signal will enable writing to the data memory. When MEM_WRITE is se
 | SH‌ ‌            | 1‌ ‌          | 1‌ ‌          | 1‌ ‌          | 0‌ ‌          |
 | SW‌ ‌            | 1‌            | ‌1‌ ‌         | 1‌ ‌          | 1‌            |
 
-## MEM_READ
-
-This control signal will enable reading from the data memory. When MEM_READ is set, data is read from the data memory and when MEM_READ is cleared, data is not read from the memory.
-
-| Writeback‌ ‌Source‌            | ‌WB_SEL[1]‌ | WB_SEL[0]‌ |
-| ------------------------------ | ----------- | ---------- |
-| ALU‌ ‌result‌ ‌                | 0‌ ‌        | 0‌         |
-| Data‌ ‌from‌ ‌data‌ ‌memory‌ ‌ | 0‌ ‌        | 1‌         |
-| Immediate‌ ‌value‌             | ‌ 1‌ ‌      | 0‌         |
-| PC‌ ‌+‌ ‌4‌ ‌                  | 1‌ ‌        | 1‌         |
+---
 
 ## WB_SEL
 
@@ -149,7 +163,16 @@ There are 4 sources for the write back value to be written to the register file.
 - Immediate value - For LUI instruction
 - PC + 4 value - For J - Type instruction
 
-This control signal will select between these 4 sources. The WB_SEL signal is a 2 - bit control signal and the encoding is shown in Table 6.
+This control signal will select between these 4 sources. The WB_SEL signal is a 2 - bit control signal and the encoding is shown in following table.
+
+| Writeback‌ ‌Source‌            | ‌WB_SEL[1]‌ | WB_SEL[0]‌ |
+| ------------------------------ | ----------- | ---------- |
+| ALU‌ ‌result‌ ‌                | 0‌ ‌        | 0‌         |
+| Data‌ ‌from‌ ‌data‌ ‌memory‌ ‌ | 0‌ ‌        | 1‌         |
+| Immediate‌ ‌value‌             | ‌ 1‌ ‌      | 0‌         |
+| PC‌ ‌+‌ ‌4‌ ‌                  | 1‌ ‌        | 1‌         |
+
+---
 
 ## REG_WRITE_EN
 

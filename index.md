@@ -4,15 +4,7 @@ title: Home
 nav_order: 1
 ---
 
-[comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
-
 # RV32IM Pipeline Implementation
-
----
-
-This is a sample image, to show how to add images to your page. To learn more options, please refer [this](https://projects.ce.pdn.ac.lk/docs/faq/how-to-add-an-image/)
-
-![Sample Image](./images/sample.png)
 
 ---
 
@@ -28,13 +20,17 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Introduction
 
-description of the real world problem and solution, impact
+The objective of this project was to design and implement a 5 stage pipeline CPU to support the RISC-V instruction architecture. This pipeline CPU supports the entire RV32IM ISA which contains 45 instuctions.
+
+The designed pipeline CPU was implemented using behavioural modeling in verilogHDL and icarus Verilog was used compile and simulate. gtkWave was used to observe the behaviour.
+
+[GitHub Repository](https://github.com/cepdnaclk/e16-co502-RV32IM-pipeline-implementation-group1)
 
 ---
 
 ## Pipeline Datapath
 
-![Pipeline Image](./images/datapath.png)
+![Pipeline Image](./images/handling_hazards/forwarding_datapath.png)
 
 ---
 

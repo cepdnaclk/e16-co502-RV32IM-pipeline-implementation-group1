@@ -29,3 +29,5 @@ Output‌ ‌of‌ ‌the‌ ‌immediate‌ ‌value‌ ‌generation‌ ‌uni
 - IMMEDIATE_VALUE[31:0]
 
 Immediate ‌‌value‌‌ generation‌‌ unit‌‌ will‌‌ generate‌‌ the‌‌ immediate‌‌ values‌‌ and‌‌ sign‌‌ extends‌‌ by‌‌ rerouting‌‌ the‌ ‌wires.‌ ‌Depending‌ ‌on‌ ‌the‌ ‌IMM_SEL‌ ‌control‌ ‌signal,‌ ‌this‌ ‌unit‌ ‌will‌ ‌output‌ ‌the‌ ‌proper‌ ‌immediate‌‌ value.‌ ‌Immediate‌ ‌value‌ generation‌‌ and‌‌ sign‌‌ extending‌‌ of‌‌ the‌‌ 7‌‌ categories‌‌ are‌‌ shown‌‌ in‌‌ the‌‌ figure ‌‌below.‌
+
+![Immediate Value Fomat](../images/hardware_units/imm_gen/imm_format.png)

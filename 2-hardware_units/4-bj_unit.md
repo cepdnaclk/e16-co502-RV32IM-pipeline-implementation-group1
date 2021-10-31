@@ -7,7 +7,7 @@ nav_order: 4
 
 # Branch and Jump Detection Unit
 
-![Branch and Jump Detection Unit Image](./images/hardware_units/bj_unit/bj_unit.png)
+![Branch and Jump Detection Unit Image](../images/hardware_units/bj_unit/bj_unit.png)
 
 This unit is for detecting whether the branch or the jump has to be taken or not. Inputs to this unit are,
 
@@ -28,8 +28,9 @@ This unit will contain a comparator implemented using behavioural modeling and a
 
 2. BRANCH_JUMP control signal, EQUAL and LESS_THAN intermediate signals will be the inputs to the combinational logic circuit. The combinational logic circuit will generate the PC_SELECT control signal depending on its inputs.
 
-![Branch and Jump Table Image](./images/hardware_units/bj_unit/bj_truth_table.png)
-![Branch and Jump Circuit Image](./images/hardware_units/bj_unit/bj_circuit.png)
+![Branch and Jump Table Image](../images/hardware_units/bj_unit/bj_truth_table.png)
+
+![Branch and Jump Circuit Image](../images/hardware_units/bj_unit/branch_component_hardware.png)
 
 #### PC_SELECT Control Signal
 
