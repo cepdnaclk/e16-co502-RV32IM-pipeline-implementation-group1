@@ -31,6 +31,8 @@ Control signals generated using the OPCODE, FUNCT3 and FUNCT7,
 
 Figure 3 shows the combinational logic circuit designed to generate the control signals and the intermediate signals using the OPCODE bits. ALUOP_TYPE, BL and IMM_TYPE are the intermediate signals generated using the OPCODE bits which will be later used by separate combinational logic circuits to generate the ALU_OP, BRANCH_JUMP and IMM_SEL control signals respectively.
 
+![Combinational‌ ‌circuit‌ ‌generating‌ ‌the‌ ‌control‌ ‌signals‌ ‌from‌ ‌OPCODE](../../images/hardware_units/control_unit/opcode_decoding.png)
+
 ---
 
 ## Generating the IMM_SEL control signal
@@ -53,7 +55,7 @@ FUNCT3 bits in SLTIU, SLLI, SRLI and SRAI instructions were used along with the 
 | I_shift‌       | ‌1‌ ‌       | 0‌          | ‌0          | x‌        | ‌0‌       | ‌ 1‌      | 1‌         | ‌0‌        | ‌1‌ ‌      |
 | I_unigned‌ ‌   | 1‌          | ‌0‌         | ‌0‌         | ‌ 0‌      | ‌1‌       | 1‌        | 1‌         | ‌ 1‌ ‌     | 1‌         |
 
-<!-- !TODO -->
+![Combinational‌ ‌circuit‌ ‌generating‌ ‌the‌ ‌IMM_SEL‌ ‌control‌ ‌signal](../../images/hardware_units/control_unit/imm_sel_generation.png)
 
 ## Generating the ALU_OP control signal
 
@@ -68,7 +70,9 @@ ALUOP_TYPE intermediate signal, FUNCT3, FUNCT7, IMM_SEL control signal, and R_TY
 - All other instructions that uses ALU
   ALU_OP for these instructions was an ADD operation.
 
-  ![ALU Design Image](./images/hardware_units/control_unit/aluop_design.png)
+  ![ALU Design Image](../../images/hardware_units/control_unit/aluop_design.png)
+
+---
 
 ## Generating the BRANCH_JUMP control signal
 
@@ -85,6 +89,8 @@ BL intermediate signal, OPCODE[2] and FUNCT3 bits were used to generate the BRAN
 | BGE‌ ‌      | 0‌ ‌      | 1‌ ‌   | 1‌        | ‌0‌ ‌     | 1‌ ‌      | 1‌             | ‌0‌ ‌          | 1‌ ‌           |
 | BLTU‌ ‌     | 0‌        | ‌1‌    | ‌1‌ ‌     | 1‌ ‌      | 0‌ ‌      | 1‌ ‌           | 1‌ ‌           | 0‌ ‌           |
 | BGEU‌ ‌     | 0‌ ‌      | 1‌ ‌   | 1‌ ‌      | 1‌ ‌      | 1‌        | ‌1‌ ‌          | 1‌ ‌           | 1‌ ‌           |
+
+![Combinational‌ ‌circuit‌ ‌generating‌ ‌the‌ ‌BRANCH_JUMP‌ ‌control‌ ‌signal‌](../../images/hardware_units/control_unit/branch_jump_generation.png)
 
 ---
 
@@ -106,3 +112,5 @@ When‌ ‌the‌ ‌instruction‌ ‌is‌ ‌a‌ ‌LOAD‌ ‌or‌ ‌a‌
 | SB‌ ‌               | 1‌ ‌  | 0‌ ‌   | 0‌ ‌      | 0‌ ‌      | 0‌ ‌      | 1‌ ‌          | 0‌ ‌          | 1‌ ‌          | 1‌            |
 | SH‌ ‌               | 1‌ ‌  | 0‌ ‌   | 0‌ ‌      | 0‌ ‌      | 1‌ ‌      | 1‌ ‌          | 1‌ ‌          | 1‌            | ‌0            |
 | SW‌ ‌               | 1‌    | ‌ 0‌ ‌ | 0‌ ‌      | 1‌ ‌      | 0‌ ‌      | 1‌            | ‌1‌ ‌         | 1‌            | ‌1            |
+
+![Combinational‌ ‌Circuit‌ ‌Generating‌ ‌the‌ ‌READ_WRITE‌ ‌Control‌ ‌Signal](../../images/hardware_units/control_unit/read_write_generation.png)

@@ -64,6 +64,7 @@ The‌ ‌alu‌ ‌result‌ ‌from‌ ‌the‌ ‌add‌ ‌instruction‌ �
 ‌
 The‌ ‌data‌ ‌loaded‌ ‌from‌ ‌memory‌ ‌is‌ ‌needed‌ ‌to‌ ‌perform‌ ‌the‌ ‌add‌ ‌operation‌ ‌before‌ ‌the‌ ‌load‌‌
 instruction‌ ‌writes‌ ‌back‌ ‌to‌ ‌the‌ ‌register‌ ‌R4.‌ ‌
+
 ‌
 In‌‌ Load-Use‌‌ hazards,‌‌it‌‌ is‌‌ required‌‌ to‌‌ have‌‌ a‌‌ nop‌‌ because‌‌ the‌‌ data‌‌ is‌‌ready‌‌ in‌‌ the‌‌ mem‌‌ stage‌‌ at‌‌ the‌‌ end‌‌ of‌‌ the‌‌ clock‌‌ cycle‌‌ and‌‌ instruction‌‌ after‌‌ the‌‌ Load‌‌ instruction‌‌ needs‌‌ the‌‌ loaded‌‌ data‌‌ at‌ ‌the‌ ‌beginning‌ ‌of‌ ‌the‌ ‌clock‌ ‌cycle.
 

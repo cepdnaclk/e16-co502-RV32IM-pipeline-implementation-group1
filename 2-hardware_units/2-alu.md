@@ -34,7 +34,7 @@ Inputs to the ALU are,
 
 - DATA1[31:0]
 - DATA2[31:0]
-- ALU_OP[4:0] - control signal (See [ALU_OP](#alu_op) for encoding and [Generating the ALU_OP control signal](#generating-the-alu_op-control-signal) for design)
+- ALU_OP[4:0]
 
 Output of the ALU,
 

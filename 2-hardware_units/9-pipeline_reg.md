@@ -27,9 +27,6 @@ In‌ ‌between‌ ‌each‌ ‌stage‌ ‌there‌ ‌is‌ ‌a‌ ‌pipel
 Data‌ ‌and‌ ‌control‌ ‌signals‌ ‌are‌ ‌written‌ ‌to‌ ‌the‌ ‌pipeline‌ ‌registers‌ ‌at‌ ‌the‌ ‌positive‌ ‌edge‌ ‌of‌ ‌the‌ ‌clock‌ ‌cycle‌‌ and‌ ‌when‌ ‌the‌ ‌reset‌ ‌signal‌ ‌is‌ ‌set,‌ ‌the‌ ‌pipeline‌ ‌registers‌ ‌will‌ ‌get‌ ‌reset.
 
 ![IF/ID](../images/hardware_units/pipeline_reg/if_id.png)
-
 ![ID/EX](../images/hardware_units/pipeline_reg/id_ex.png)
-
 ![EX/MEM](../images/hardware_units/pipeline_reg/ex_mem.png)
-
 ![MEM/WB](../images/hardware_units/pipeline_reg/mem_wb.png)
